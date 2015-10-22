@@ -78,6 +78,8 @@ KeyboardInputManager.prototype.listen = function () {
   var gameContainer = document.getElementsByClassName("game-container")[0];
 
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
+    //alert("x: " + event.touches[0].pageX + ", y: " + event.touches[0].pageY);
+
     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches.length > 1) {
       return; // Ignore if touching with more than 1 finger
@@ -99,6 +101,7 @@ KeyboardInputManager.prototype.listen = function () {
   });
 
   gameContainer.addEventListener(this.eventTouchend, function (event) {
+    
     if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
         event.targetTouches.length > 0) {
       return; // Ignore if still touching with one or more fingers
@@ -113,6 +116,10 @@ KeyboardInputManager.prototype.listen = function () {
       touchEndClientX = event.changedTouches[0].clientX;
       touchEndClientY = event.changedTouches[0].clientY;
     }
+
+    alert("x: " + touchStartClientX + ", y: " + touchStartClientY);
+    alert("x: " + touchEndClientX + ", y: " + touchEndClientY);
+
 
     var dx = touchEndClientX - touchStartClientX;
     var absDx = Math.abs(dx);
