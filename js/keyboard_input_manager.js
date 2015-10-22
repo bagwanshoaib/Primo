@@ -25,7 +25,7 @@ KeyboardInputManager.prototype.on = function (event, callback) {
 KeyboardInputManager.prototype.emit = function (event, data) {
   var callbacks = this.events[event];
   if (callbacks) {
-    callbacks.forEach(function (callback) {
+      callbacks.forEach(function (callback) {
       callback(data);
     });
   }
@@ -34,7 +34,7 @@ KeyboardInputManager.prototype.emit = function (event, data) {
 KeyboardInputManager.prototype.listen = function () {
   var self = this;
 
-  var map = {
+ /* var map = {
     38: 0, // Up
     39: 1, // Right
     40: 2, // Down
@@ -47,6 +47,11 @@ KeyboardInputManager.prototype.listen = function () {
     68: 1, // D
     83: 2, // S
     65: 3  // A
+  }*/
+  var map = {
+    40: 2, // Down
+    74: 2, // Vim down
+    83: 2 // S
   };
 
   // Respond to direction keys
@@ -78,7 +83,9 @@ KeyboardInputManager.prototype.listen = function () {
   var gameContainer = document.getElementsByClassName("game-container")[0];
 
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
-    //alert("x: " + event.touches[0].pageX + ", y: " + event.touches[0].pageY);
+    
+    alert('top = ' + gameContainer.offsetTop +
+      '\nleft = ' + gameContainer.offsetLeft);
 
     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches.length > 1) {
@@ -117,8 +124,8 @@ KeyboardInputManager.prototype.listen = function () {
       touchEndClientY = event.changedTouches[0].clientY;
     }
 
-    alert("x: " + touchStartClientX + ", y: " + touchStartClientY);
-    alert("x: " + touchEndClientX + ", y: " + touchEndClientY);
+    //alert("x: " + touchStartClientX + ", y: " + touchStartClientY);
+    //alert("x: " + touchEndClientX + ", y: " + touchEndClientY);
 
 
     var dx = touchEndClientX - touchStartClientX;

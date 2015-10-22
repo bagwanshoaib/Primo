@@ -140,12 +140,15 @@ HTMLActuator.prototype.updatePrimoSum = function (primoSum) {
 
   this.currentsumContainer.textContent = this.currentSum;
 
+  var addition = document.createElement("div");
+  addition.classList.add("currentSum-addition");
   if (difference > 0) {
-    var addition = document.createElement("div");
-    addition.classList.add("currentSum-addition");
     addition.textContent = "+" + difference;
-
-    this.currentsumContainer.appendChild(addition);
+     this.currentsumContainer.appendChild(addition);
+  }
+  else if(difference < 0){
+     addition.textContent = difference;
+     this.currentsumContainer.appendChild(addition);
   }
 };
 
