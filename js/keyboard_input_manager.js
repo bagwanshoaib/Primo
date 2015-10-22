@@ -82,11 +82,17 @@ KeyboardInputManager.prototype.listen = function () {
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
 
-  gameContainer.addEventListener(this.eventTouchstart, function (event) {
-    
-    alert('top = ' + gameContainer.offsetTop +
-      '\nleft = ' + gameContainer.offsetLeft);
+  var gridCell = document.getElementsByClassName("grid-cell")[0];
+  
+  gridCell.addEventListener(this.eventTouchstart, function (event)) {
+   
+     alert('top = ' + gridCell.offsetTop +
+      '\nleft = ' + gridCell.offsetLeft);
+  }
 
+
+  gameContainer.addEventListener(this.eventTouchstart, function (event) {
+ 
     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches.length > 1) {
       return; // Ignore if touching with more than 1 finger
