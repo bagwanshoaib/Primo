@@ -62,7 +62,13 @@ GameManager.prototype.setup = function () {
 
   // Update the actuator
   this.actuate();
+
+  document.onmousedown = onPuzzleClick;
 };
+
+function onPuzzleClick(e){
+  alert("clicked");
+}
 
 // Set up the target
 GameManager.prototype.addTarget = function () {
