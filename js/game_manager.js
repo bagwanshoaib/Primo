@@ -67,7 +67,13 @@ GameManager.prototype.setup = function () {
 };
 
 function onPuzzleClick(e){
-  alert("clicked");
+   if(e.layerX || e.layerX == 0){
+                alert(e.layerX+" "+e.layerY);
+                
+            }
+            else if(e.offsetX || e.offsetX == 0){
+               alert("false");
+    }
 }
 
 // Set up the target
