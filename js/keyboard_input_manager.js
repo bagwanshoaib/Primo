@@ -81,14 +81,14 @@ KeyboardInputManager.prototype.listen = function () {
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
 
-  var gridCell = document.getElementsByClassName("grid-cell")[0];
-  gridCell.addEventListener(this.eventTouchstart, function (event) {
-     alert("cell clicked");
-   });
-
   var gameContainer = document.getElementsByClassName("game-container")[0];
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
  
+     var gridCell = document.getElementsByClassName("grid-cell")[15];
+     gridCell.addEventListener(this.eventTouchstart, function (event) {
+     alert("cell clicked");
+   });
+
     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches.length > 1) {
       return; // Ignore if touching with more than 1 finger
