@@ -78,16 +78,22 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
-  // Respond to swipe events
+  var gridCells = document.getElementsByClassName("grid-cell");
+  
+
+ // Respond to swipe events
+  var touchStartClientX, touchStartClientY;
+
+gridCells.addEventListener(this.eventTouchstart, function (event) {
+  alert(gridCells.length);
+});
+
+
+/*  // Respond to swipe events
   var touchStartClientX, touchStartClientY;
 
   var gameContainer = document.getElementsByClassName("game-container")[0];
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
- 
-     var gridCell = document.getElementsByClassName("grid-cell")[15];
-     gridCell.addEventListener(this.eventTouchstart, function (event) {
-     alert("cell clicked");
-   });
 
     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches.length > 1) {
@@ -126,8 +132,8 @@ KeyboardInputManager.prototype.listen = function () {
       touchEndClientY = event.changedTouches[0].clientY;
     }
 
-    //alert("x: " + touchStartClientX + ", y: " + touchStartClientY);
-    //alert("x: " + touchEndClientX + ", y: " + touchEndClientY);
+    alert("x: " + touchStartClientX + ", y: " + touchStartClientY);
+    alert("x: " + touchEndClientX + ", y: " + touchEndClientY);
 
 
     var dx = touchEndClientX - touchStartClientX;
@@ -140,7 +146,7 @@ KeyboardInputManager.prototype.listen = function () {
       // (right : left) : (down : up)
       self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
     }
-  });
+  }); */
 };
 
 KeyboardInputManager.prototype.restart = function (event) {
