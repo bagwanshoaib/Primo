@@ -125,7 +125,7 @@ GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value = Math.floor(Math.random() * 9) + 1;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
-
+    //alert(tile.value);
     this.grid.insertTile(tile);
   }
 };

@@ -57,7 +57,7 @@ Grid.prototype.availableCells = function () {
 // Call callback for every cell
 Grid.prototype.eachCell = function (callback) {
   for (var x = 0; x < this.size; x++) {
-    for (var y = 0; y < this.size; y++) {
+    for (var y = 0; y < this.size-1; y++) {
       callback(x, y, this.cells[x][y]);
     }
   }
@@ -87,6 +87,7 @@ Grid.prototype.cellContent = function (cell) {
 
 // Inserts a tile at its position
 Grid.prototype.insertTile = function (tile) {
+  //alert(tile.x +","+ tile.y);
   this.cells[tile.x][tile.y] = tile;
 };
 

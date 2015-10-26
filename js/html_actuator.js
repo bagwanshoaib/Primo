@@ -7,6 +7,7 @@ function HTMLActuator() {
   this.currentsumContainer = document.querySelector(".currentsum-container");
 
   this.score = 0;
+  this.cellId = 1;
   
 }
 
@@ -20,6 +21,8 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       column.forEach(function (cell) {
         if (cell) {
           self.addTile(cell);
+          $('#grid-cell'+self.cellId).draggable({helper: "clone"},{containment: "#grid-container"});
+          self.cellId += 1;
         }
       });
     });
@@ -54,9 +57,11 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   var wrapper   = document.createElement("div");
   var inner     = document.createElement("div");
+  inner.id = "grid-cell"+self.cellId;
   var position  = tile.previousPosition || { x: tile.x, y: tile.y };
   var positionClass = this.positionClass(position);
 
+  
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
