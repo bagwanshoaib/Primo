@@ -11,9 +11,64 @@ function KeyboardInputManager() {
     this.eventTouchmove     = "touchmove";
     this.eventTouchend      = "touchend";
   }
-
+ 
+  this.setupPieces();
   this.listen();
 }
+
+KeyboardInputManager.prototype.setupPieces = function () {
+
+  var gameContainer = document.getElementsByClassName("grid-container")[0];
+  var gridCell = document.getElementsByClassName("grid-cell")[0]; 
+ 
+  var gameContainerStyle = gameContainer.currentStyle || window.getComputedStyle(gameContainer);
+  var gridCellStyle = gridCell.currentStyle ||  window.getComputedStyle(gridCell);
+ 
+  this._pieces = [];
+  this._mouse = {x:0,y:0};
+  this._puzzleHeight = gameContainerStyle.height;
+  this._puzzleWidth = gameContainerStyle.width;
+  this._pieceHeight = gridCellStyle.height;
+  this._pieceWidth = gridCellStyle.width;
+  this._pieceMargin = gridCellStyle.marginRight;
+  this._currentPiece = null;
+  this._currentDropPiece = null;
+};
+
+KeyboardInputManager.prototype.checkPieceClicked = function (){
+  var i;
+  var piece;
+  this.buildPieces();
+  for(i = 0;i < this._pieces.length;i++){
+     piece = this._pieces[i];
+     if(this._mouse.x < piece.xPos || this._mouse.x > (piece.xPos + this._pieceWidth) || this._mouse.y < piece.yPos || this._mouse.y > (piece.yPos + this._pieceHeight)){
+       //PIECE NOT HIT
+      }
+      else{
+            return piece;
+          }
+  }
+  return null;
+};
+
+KeyboardInputManager.prototype.buildPieces = function (){
+   var i;
+    this._pieces = [];
+    var piece;
+    var xPos = 0;
+    var yPos = 0;
+    for(i = 0;i < 16 ;i++){
+        piece = {};
+        piece.sx = xPos;
+        piece.sy = yPos;
+        this._pieces.push(piece);
+        xPos += this._pieceWidth;
+        if(xPos >= this._puzzleWidth){
+            xPos = 0;
+            yPos += this._pieceHeight;
+        }
+    }
+  };         
 
 KeyboardInputManager.prototype.on = function (event, callback) {
   if (!this.events[event]) {
@@ -76,30 +131,18 @@ KeyboardInputManager.prototype.listen = function () {
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
-  this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+  this.bindButtonPress(".keep-playing-button", this.keepPlaying);  
 
-  var gridCells = document.getElementsByClassName("grid-cell");
+  // Respond to swipe events
+  var touchStartClientX, touchStartClientY;
+
+  var gameContainer = document.getElementsByClassName("grid-container")[0];
   
-
- // Respond to swipe events
-  var touchStartClientX, touchStartClientY;
-
-gridCells.addEventListener(this.eventTouchstart, function (event) {
-  alert(gridCells.length);
-});
-
-
-/*  // Respond to swipe events
-  var touchStartClientX, touchStartClientY;
-
-  var gameContainer = document.getElementsByClassName("game-container")[0];
   gameContainer.addEventListener(this.eventTouchstart, function (event) {
-
-    if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
+     if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
         event.targetTouches.length > 1) {
       return; // Ignore if touching with more than 1 finger
     }
-
     if (window.navigator.msPointerEnabled) {
       touchStartClientX = event.pageX;
       touchStartClientY = event.pageY;
@@ -107,7 +150,6 @@ gridCells.addEventListener(this.eventTouchstart, function (event) {
       touchStartClientX = event.touches[0].clientX;
       touchStartClientY = event.touches[0].clientY;
     }
-
     event.preventDefault();
   });
 
@@ -125,16 +167,16 @@ gridCells.addEventListener(this.eventTouchstart, function (event) {
     var touchEndClientX, touchEndClientY;
 
     if (window.navigator.msPointerEnabled) {
-      touchEndClientX = event.pageX;
-      touchEndClientY = event.pageY;
+      self._mouse.x = touchEndClientX = event.pageX;
+      self._mouse.y = touchEndClientY = event.pageY;
     } else {
-      touchEndClientX = event.changedTouches[0].clientX;
-      touchEndClientY = event.changedTouches[0].clientY;
+      self._mouse.x = touchEndClientX = event.changedTouches[0].clientX;
+      self._mouse.y = touchEndClientY = event.changedTouches[0].clientY;
     }
-
-    alert("x: " + touchStartClientX + ", y: " + touchStartClientY);
-    alert("x: " + touchEndClientX + ", y: " + touchEndClientY);
-
+  
+    self._currentPiece = self.checkPieceClicked();
+   
+ 
 
     var dx = touchEndClientX - touchStartClientX;
     var absDx = Math.abs(dx);
@@ -144,9 +186,9 @@ gridCells.addEventListener(this.eventTouchstart, function (event) {
 
     if (Math.max(absDx, absDy) > 10) {
       // (right : left) : (down : up)
-      self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
-    }
-  }); */
+      //self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+    } 
+   });
 };
 
 KeyboardInputManager.prototype.restart = function (event) {

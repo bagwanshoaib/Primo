@@ -4,7 +4,18 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
 
-  this.startTiles     = 3;
+  this.startTiles     = 4;
+
+  this._pieces = 0;
+  this._puzzleWidth=0;
+  this._puzzleHeight=0;
+  this._pieceWidth=0;
+  this._pieceHeight=0;
+  this._currentPiece=0;
+  this._currentDropPiece=0;  
+
+  this._mouse;
+
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -62,7 +73,6 @@ GameManager.prototype.setup = function () {
 
   // Update the actuator
   this.actuate();
-
 };
 
 // Set up the target
