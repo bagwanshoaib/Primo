@@ -56,8 +56,8 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
           $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
             drop: function( event, ui ) {
               $( this )
-               self.game_maneger.addRandomTile();
-                //ui.draggable.detach().appendTo($(this));
+               //self.game_maneger.addRandomTile();
+              ui.draggable.detach().appendTo($(this));
             },
             over: function( event, ui ) 
             {
