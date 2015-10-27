@@ -51,9 +51,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
-<<<<<<< HEAD
   self.updateScore(metadata.score);
-=======
 
     $(function() {
           $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
@@ -71,7 +69,6 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
 
     self.updateScore(metadata.score);
->>>>>>> origin/master
     self.updateBestScore(metadata.bestScore);
 
     if (metadata.terminated) {
