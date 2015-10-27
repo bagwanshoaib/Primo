@@ -131,6 +131,11 @@ GameManager.prototype.addRandomTile = function () {
   }
 };
 
+GameManager.prototype.alertShow = function(){
+
+alert("Hello");
+
+};
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function () {
 

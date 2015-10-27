@@ -51,23 +51,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
-
-    $(function() {
-          $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
-            drop: function( event, ui ) {
-              $( this )
-               self.game_maneger.addRandomTile();
-                //ui.draggable.detach().appendTo($(this));
-            },
-            over: function( event, ui ) 
-            {
-            
-            }
-          });
-    });
-
-
-    self.updateScore(metadata.score);
+  self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
 
     if (metadata.terminated) {
@@ -100,7 +84,6 @@ HTMLActuator.prototype.addTile = function (tile) {
   inner.id = "grid-cell"+self.cellId;
   var position  = tile.previousPosition || { x: tile.x, y: tile.y };
   var positionClass = this.positionClass(position);
-
   
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
