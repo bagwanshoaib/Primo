@@ -5,39 +5,9 @@
   <title>Primo</title>
 
   <link href="style/main.css" rel="stylesheet" type="text/css">
-  <style type="text/css">
-
-
-  .tile-inner {
-  width: 107px;
-  height: 107px;
-  line-height: 107px; }
-
-  .tile-inner {
-    border-radius: 3px;
-    background: #eee4da;
-    text-align: center;
-    font-weight: bold;
-    z-index: -10;
-    font-size: 55px; }
-
-    .tile-inner {
-  -webkit-animation: appear 200ms ease 100ms;
-  -moz-animation: appear 200ms ease 100ms;
-  animation: appear 200ms ease 100ms;
-  -webkit-animation-fill-mode: backwards;
-  -moz-animation-fill-mode: backwards;
-  animation-fill-mode: backwards; }
-
-  .tile-inner {
-  z-index: 20;
-  -webkit-animation: pop 200ms ease 100ms;
-  -moz-animation: pop 200ms ease 100ms;
-  animation: pop 200ms ease 100ms;
-  -webkit-animation-fill-mode: backwards;
-  -moz-animation-fill-mode: backwards;
-  animation-fill-mode: backwards; }
+  <style>
   
+
   </style>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
@@ -94,10 +64,10 @@
           <div class="grid-cell"></div>
         </div>
         <div class="grid-row">
-          <div id = "grid-cell12" class="grid-cell"><p></p></div>
-          <div id = "grid-cell13" class="grid-cell"><p></p></div>
-          <div id = "grid-cell14" class="grid-cell"><p></p></div>
-          <div id = "grid-cell15" class="grid-cell"><p></p></div>
+          <div id = "grid-cell12" class="grid-cell"></div>
+          <div id = "grid-cell13" class="grid-cell"></div>
+          <div id = "grid-cell14" class="grid-cell"></div>
+          <div id = "grid-cell15" class="grid-cell"></div>
         </div>
       </div>
 
@@ -112,14 +82,6 @@
       </div>
   </div>
 
-  <script src="js/jquery-1.4.2.min.js"></script> 
-  <script src="js/jquery.ui.core.min.js"></script> 
-  <script src="js/jquery.ui.widget.min.js"></script> 
-  <script src="js/jquery.ui.mouse.min.js"></script> 
-  <script src="js/jquery.ui.draggable.min.js"></script> 
-  <script src="js/jquery.ui.droppable.js"></script> 
-  <script src="js/jquery.ui.touch-punch.min.js"></script>
- 
   <script src="js/bind_polyfill.js"></script>
   <script src="js/classlist_polyfill.js"></script>
   <script src="js/animframe_polyfill.js"></script>
@@ -130,30 +92,23 @@
   <script src="js/game_manager.js"></script>
   <script src="js/application.js"></script>
   <script src="js/html_actuator.js"></script>
+  <script src="js/jquery-1.4.2.min.js"></script> 
+  <script src="js/jquery.ui.core.min.js"></script> 
+  <script src="js/jquery.ui.widget.min.js"></script> 
+  <script src="js/jquery.ui.mouse.min.js"></script> 
+  <script src="js/jquery.ui.draggable.min.js"></script> 
+  <script src="js/jquery.ui.droppable.js"></script> 
+  <script src="js/jquery.ui.touch-punch.min.js"></script>
 
- <script >  
-  $(function() {
-          $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
+  <SCRIPT TYPE="text/javascript">
+$( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
+            
             drop: function( event, ui ) {
               $( this )
-                tolerance: 'intersect',
-               //self.game_maneger.addRandomTile();
-                ui.draggable.detach().appendTo($(this));
-                
-            },
-            over: function( event, ui ) 
-            {
-               // Adds a tile in a random position
-               if (this.grid.cellsAvailable()) {
-                var value = Math.floor(Math.random() * 9) + 1;
-                var tile = new Tile(this.grid.randomAvailableCell(), value);
-                //alert(tile.value);
-                this.grid.insertTile(tile);
-              }
+                ui.draggable.detach();
+                ui.droppable.addClass("tile-inner");
             }
           });
-  });
-  </script>
-
+  </SCRIPT>
 </body>
 </html>

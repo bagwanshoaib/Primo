@@ -51,23 +51,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
-  self.updateScore(metadata.score);
-
-    $(function() {
-          $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
-            drop: function( event, ui ) {
-              $( this )
-               //self.game_maneger.addRandomTile();
-              ui.draggable.detach().appendTo($(this));
-            },
-            over: function( event, ui ) 
-            {
-            
-            }
-          });
-    });
-
-
+    self.updateScore(metadata.score);
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
 
@@ -136,6 +120,7 @@ HTMLActuator.prototype.addTile = function (tile) {
 
   // Put the tile on the board
   this.tileContainer.appendChild(wrapper);
+
 };
 
 HTMLActuator.prototype.applyClasses = function (element, classes) {
