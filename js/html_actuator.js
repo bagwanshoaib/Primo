@@ -8,8 +8,31 @@ function HTMLActuator() {
 
   this.score = 0;
   this.cellId = 1;
-  
+
 }
+
+HTMLActuator.prototype.getPieceNo = function (x, y){
+    return (4 * y) + x;
+};
+
+HTMLActuator.prototype.buildPieces = function (x, y){
+   var i;
+    this._pieces = [];
+    var piece;
+    var xPos = 0;
+    var yPos = 0;
+    for(i = 0;i < 16 ;i++){
+        piece = {};
+        piece.sx = xPos;
+        piece.sy = yPos;
+        this._pieces.push(piece);
+        xPos += this._pieceWidth;
+        if(xPos >= this._puzzleWidth){
+            xPos = 0;
+            yPos += this._pieceHeight;
+        }
+    }
+}; 
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
@@ -22,10 +45,27 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
         if (cell) {
           self.addTile(cell);
           $('#grid-cell'+self.cellId).draggable({helper: "clone"},{containment: "#grid-container"});
+          self.getPieceNo(cell.x,cell.y);
           self.cellId += 1;
         }
       });
     });
+
+
+    $(function() {
+          $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
+            drop: function( event, ui ) {
+              $( this )
+               self.game_maneger.addRandomTile();
+                //ui.draggable.detach().appendTo($(this));
+            },
+            over: function( event, ui ) 
+            {
+            
+            }
+          });
+    });
+
 
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
