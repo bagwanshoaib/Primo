@@ -51,7 +51,27 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       });
     });
 
+<<<<<<< HEAD
   self.updateScore(metadata.score);
+=======
+
+    $(function() {
+          $( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
+            drop: function( event, ui ) {
+              $( this )
+               //self.game_maneger.addRandomTile();
+              ui.draggable.detach().appendTo($(this));
+            },
+            over: function( event, ui ) 
+            {
+            
+            }
+          });
+    });
+
+
+    self.updateScore(metadata.score);
+>>>>>>> origin/master
     self.updateBestScore(metadata.bestScore);
 
     if (metadata.terminated) {
