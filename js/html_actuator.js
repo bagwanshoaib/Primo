@@ -44,12 +44,36 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       column.forEach(function (cell) {
         if (cell) {
           self.addTile(cell);
-          $('#grid-cell'+self.cellId).draggable({helper: "clone"},{containment: "#grid-container"});
+          $('#grid-cell'+self.cellId).draggable({
+             revert: true ,
+             helper: "clone",
+             containment: "#grid-container"
+            });
           self.getPieceNo(cell.x,cell.y);
           self.cellId += 1;
         }
       });
     });
+
+$( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
+            
+            drop: function( event, ui ) {
+              $( this )
+
+               // var drg = parseInt($(ui.draggable).text(),10);
+               // var drp = parseInt($(ui.droppable).text(),10);
+                $(ui.draggable).detach().clone($(this));
+               // if(isNaN(drp))
+               //   drp = 0;
+                
+               // var sum = drg + drp;
+
+               // $(this).append(drg);
+                //$(this).append(drp);
+               // grid.addRandomTile();
+               // $(ui.droppable).addClass("tile-inner");
+            }
+          });
 
     self.updateScore(metadata.score);
     self.updateScore(metadata.score);

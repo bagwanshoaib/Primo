@@ -116,3 +116,13 @@ Grid.prototype.serialize = function () {
     cells: cellState
   };
 };
+
+// Adds a tile in a random position
+Grid.prototype.addRandomTile = function () {
+  if (this.cellsAvailable()) {
+    var value = Math.floor(Math.random() * 9) + 1;
+    var tile = new Tile(this.randomAvailableCell(), value);
+    //alert(tile.value);
+    this.insertTile(tile);
+  }
+};
