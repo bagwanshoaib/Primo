@@ -350,12 +350,12 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.setupPrimoSum = function () {
   this.currentSum = 0;
   for (var x = 0; x < 4; x++) {
-     alert(this.currentSum);
+    // alert(this.currentSum);
     for (var y = 3; y < 4; y++) {
-        alert(x);
+       // alert(x);
       tile = this.grid.cellContent({ x: x, y: y });
-        alert(this.currentSum);
-        alert(tile);
+      //  alert(this.currentSum);
+       // alert(tile);
       if (tile != null) {
          if(isPrime(tile.value)){
             this.currentSum += tile.value;
