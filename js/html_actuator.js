@@ -8,6 +8,10 @@ function HTMLActuator() {
 
   this.score = 0;
   this.cellId = 1;
+  this.drp1 = 0;
+  this.drp2 = 0;
+  this.drp3 = 0;
+  this.drp4 = 0;
 
 }
 
@@ -49,29 +53,53 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
              helper: "clone",
              containment: "#grid-container"
             });
-          self.getPieceNo(cell.x,cell.y);
           self.cellId += 1;
         }
       });
     });
 
-$( "#grid-cell12, #grid-cell13, #grid-cell14, #grid-cell15" ).droppable({
-            
+$( "#grid-cell12" ).droppable({
+
             drop: function( event, ui ) {
               $( this )
+                var v1 = $(ui.draggable).text()+"";
+                var drg = new Number(v1);
+                self.drp1 = self.drp1 + drg;
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp1+"</div></div>");
+                grid.addRandomTiles();
+            }
+          });
 
-               // var drg = parseInt($(ui.draggable).text(),10);
-               // var drp = parseInt($(ui.droppable).text(),10);
-                $(ui.draggable).detach().clone($(this));
-               // if(isNaN(drp))
-               //   drp = 0;
-                
-               // var sum = drg + drp;
+$( "#grid-cell13" ).droppable({
+            drop: function( event, ui ) {
+              $( this )
+                var v1 = $(ui.draggable).text()+"";
+                var drg = new Number(v1);
+                self.drp2 = self.drp2 + drg;
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp2+"</div></div>");
+                grid.addRandomTiles();
+            }
+          });
+$( "#grid-cell14" ).droppable({
+            drop: function( event, ui ) {
+              $( this )
+                var v1 = $(ui.draggable).text()+"";
+                var drg = new Number(v1);
+                self.drp3 = self.drp3 + drg;
+                $(this.append)
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp3+"</div></div>");
+                grid.addRandomTiles();
+            }
+          });
 
-               // $(this).append(drg);
-                //$(this).append(drp);
-               // grid.addRandomTile();
-               // $(ui.droppable).addClass("tile-inner");
+$( "#grid-cell15" ).droppable({
+            drop: function( event, ui ) {
+              $( this )
+                var v1 = $(ui.draggable).text()+"";
+                var drg = new Number(v1);
+                self.drp4 = self.drp4 + drg;
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp4+"</div></div>");
+                grid.addRandomTiles();
             }
           });
 

@@ -1,8 +1,9 @@
-function GameManager(size, InputManager, Actuator, StorageManager) {
+function GameManager(size, InputManager, Actuator, StorageManager, v) {
   this.size           = size; // Size of the grid
   this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
+  this.v = v;
 
   this.startTiles     = 4;
 
@@ -47,7 +48,7 @@ GameManager.prototype.isGameTerminated = function () {
 GameManager.prototype.setup = function () {
   var previousState = this.storageManager.getGameState();
   // Reload the game from a previous game if present
-  if (previousState) {
+  if (previousState && this.v == 0) {
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
@@ -57,7 +58,20 @@ GameManager.prototype.setup = function () {
     this.gameTarget  = previousState.gameTarget;
     this.currentSum  = previousState.currentSum;
 
-  } else {
+  } else if(this.v == 1){
+   this.storageManager.clearGameState();
+    this.grid        = new Grid(this.size);
+    this.score       = previousState.score;
+    this.over        = previousState.over;
+    this.won         = previousState.won;
+    this.keepPlaying = previousState.keepPlaying;
+    this.gameTarget  = previousState.gameTarget;
+    this.currentSum  = previousState.currentSum;
+    this.addStartTiles();
+    this.setupPrimoSum();
+  }
+  else
+  {
     this.grid        = new Grid(this.size);
     this.score       = 0;
     this.over        = false;
@@ -67,10 +81,10 @@ GameManager.prototype.setup = function () {
     this.currentSum  = 0;
     // Add the initial tiles
     this.addStartTiles();
-    
   }
+  
   this.addTarget();
-  this.setupPrimoSum();
+  
 
   // Update the actuator
   this.actuate();
@@ -131,11 +145,6 @@ GameManager.prototype.addRandomTile = function () {
   }
 };
 
-GameManager.prototype.alertShow = function(){
-
-alert("Hello");
-
-};
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function () {
 
@@ -341,9 +350,12 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.setupPrimoSum = function () {
   this.currentSum = 0;
   for (var x = 0; x < 4; x++) {
+     alert(this.currentSum);
     for (var y = 3; y < 4; y++) {
+        alert(x);
       tile = this.grid.cellContent({ x: x, y: y });
-
+        alert(this.currentSum);
+        alert(tile);
       if (tile != null) {
          if(isPrime(tile.value)){
             this.currentSum += tile.value;

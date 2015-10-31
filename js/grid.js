@@ -89,6 +89,7 @@ Grid.prototype.cellContent = function (cell) {
 Grid.prototype.insertTile = function (tile) {
   //alert(tile.x +","+ tile.y);
   this.cells[tile.x][tile.y] = tile;
+  //alert(tile.x +","+ tile.y +""+);
 };
 
 Grid.prototype.removeTile = function (tile) {
@@ -118,11 +119,7 @@ Grid.prototype.serialize = function () {
 };
 
 // Adds a tile in a random position
-Grid.prototype.addRandomTile = function () {
-  if (this.cellsAvailable()) {
-    var value = Math.floor(Math.random() * 9) + 1;
-    var tile = new Tile(this.randomAvailableCell(), value);
-    //alert(tile.value);
-    this.insertTile(tile);
-  }
+Grid.prototype.addRandomTiles = function () {
+  new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager,1);
 };
+
