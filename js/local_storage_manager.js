@@ -23,6 +23,10 @@ function LocalStorageManager() {
   this.gameStateKey     = "gameState";
   this.gametargetKey    = "gameTarget";
   this.currentSumKey    = "currentSum";
+  this.drp1Key             = "drp1";
+  this.drp2Key             = "drp2";
+  this.drp3Key             = "drp3";
+  this.drp4Key             = "drp4";
 
   var supported = this.localStorageSupported();
 
@@ -82,6 +86,54 @@ LocalStorageManager.prototype.setCurrentSum = function (currentSum) {
   this.storage.setItem(this.currentSumKey, JSON.stringify(currentSum));
 };
 
+// Game target getters/setters and clearing
+LocalStorageManager.prototype.getDrp1 = function () {
+  var drp1JSON = this.storage.getItem(this.drp1Key);
+  return drp1JSON ? JSON.parse(drp1JSON) : null;
+};
+
+LocalStorageManager.prototype.setDrp1 = function (drp1) {
+  this.storage.setItem(this.drp1Key, JSON.stringify(drp1));
+};
+
+// Game target getters/setters and clearing
+LocalStorageManager.prototype.getDrp2 = function () {
+  var drp2JSON = this.storage.getItem(this.drp2Key);
+  return drp2JSON ? JSON.parse(drp2JSON) : null;
+};
+
+LocalStorageManager.prototype.setDrp2 = function (drp2) {
+  this.storage.setItem(this.drp2Key, JSON.stringify(drp2));
+};
+
+// Game target getters/setters and clearing
+LocalStorageManager.prototype.getDrp3 = function () {
+  var drp3JSON = this.storage.getItem(this.drp3Key);
+  return drp3JSON ? JSON.parse(drp3JSON) : null;
+};
+
+LocalStorageManager.prototype.setDrp3 = function (drp3) {
+  this.storage.setItem(this.drp3Key, JSON.stringify(drp3));
+};
+
+// Game target getters/setters and clearing
+LocalStorageManager.prototype.getDrp4 = function () {
+  var drp4JSON = this.storage.getItem(this.drp4Key);
+  return drp4JSON ? JSON.parse(drp4JSON) : null;
+};
+
+LocalStorageManager.prototype.setDrp4 = function (drp4) {
+  this.storage.setItem(this.drp4Key, JSON.stringify(drp4));
+};
+
 LocalStorageManager.prototype.clearGameState = function () {
   this.storage.removeItem(this.gameStateKey);
+};
+
+LocalStorageManager.prototype.clearDrpState = function () {
+  this.storage.removeItem(this.currentSumKey);
+  this.storage.removeItem(this.drp1Key);
+  this.storage.removeItem(this.drp2Key);
+  this.storage.removeItem(this.drp3Key);
+  this.storage.removeItem(this.drp4Key);
 };

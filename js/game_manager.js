@@ -1,12 +1,48 @@
-function GameManager(size, InputManager, Actuator, StorageManager, v) {
+function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2, drp3, drp4) {
   this.size           = size; // Size of the grid
   this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
   this.v = v;
 
-  this.startTiles     = 4;
+  if(drp1==0)
+  {
+    this.drp1 = this.storageManager.getDrp1();
+  }
+  else
+  {
+   this.drp1 = this.storageManager.getDrp1() + drp1; 
+  }
+  
+  if(drp2==0)
+  {
+    this.drp2 = this.storageManager.getDrp2();
+  }
+  else
+  {
+   this.drp2 = this.storageManager.getDrp2() + drp2; 
+  }
 
+  if(drp3==0)
+  {
+    this.drp3 = this.storageManager.getDrp3();
+  }
+  else
+  {
+   this.drp3 = this.storageManager.getDrp3() + drp3; 
+  }
+
+  if(drp4==0)
+  {
+    this.drp4 = this.storageManager.getDrp4();
+  }
+  else
+  {
+   this.drp4 = this.storageManager.getDrp4() + drp4; 
+  }
+
+
+  this.startTiles = 4;
   this._pieces = 0;
   this._puzzleWidth=0;
   this._puzzleHeight=0;
@@ -16,7 +52,6 @@ function GameManager(size, InputManager, Actuator, StorageManager, v) {
   this._currentDropPiece=0;  
 
   this._mouse;
-
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -28,7 +63,9 @@ function GameManager(size, InputManager, Actuator, StorageManager, v) {
 
 // Restart the game
 GameManager.prototype.restart = function () {
+  this.v = 0;
   this.storageManager.clearGameState();
+  this.storageManager.clearDrpState();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
 };
@@ -47,8 +84,10 @@ GameManager.prototype.isGameTerminated = function () {
 // Set up the game
 GameManager.prototype.setup = function () {
   var previousState = this.storageManager.getGameState();
+  this.storageManager.clearDrpState();
   // Reload the game from a previous game if present
   if (previousState && this.v == 0) {
+    alert("prev v=0");
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
@@ -59,7 +98,14 @@ GameManager.prototype.setup = function () {
     this.currentSum  = previousState.currentSum;
 
   } else if(this.v == 1){
-   this.storageManager.clearGameState();
+    alert("prev v=1");
+    this.storageManager.clearGameState();
+    this.storageManager.clearDrpState();
+    this.storageManager.setDrp1(this.drp1);
+    this.storageManager.setDrp2(this.drp2);
+    this.storageManager.setDrp3(this.drp3);
+    this.storageManager.setDrp4(this.drp4);
+
     this.grid        = new Grid(this.size);
     this.score       = previousState.score;
     this.over        = previousState.over;
@@ -68,10 +114,13 @@ GameManager.prototype.setup = function () {
     this.gameTarget  = previousState.gameTarget;
     this.currentSum  = previousState.currentSum;
     this.addStartTiles();
-    this.setupPrimoSum();
+    
   }
   else
   {
+    alert("else");
+    
+    this.storageManager.clearDrpState();
     this.grid        = new Grid(this.size);
     this.score       = 0;
     this.over        = false;
@@ -84,14 +133,14 @@ GameManager.prototype.setup = function () {
   }
   
   this.addTarget();
-  
-
+  this.setupPrimoSum();
   // Update the actuator
   this.actuate();
 };
 
 // Set up the target
 GameManager.prototype.addTarget = function () {
+  
  if(this.gameTarget == ""){
 
  var num1=0, num2=0, num3=0, num4=0;
@@ -140,7 +189,6 @@ GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value = Math.floor(Math.random() * 9) + 1;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
-    //alert(tile.value);
     this.grid.insertTile(tile);
   }
 };
@@ -349,20 +397,41 @@ GameManager.prototype.tileMatchesAvailable = function () {
 // Setup current prime no sum
 GameManager.prototype.setupPrimoSum = function () {
   this.currentSum = 0;
-  for (var x = 0; x < 4; x++) {
+/*  for (var x = 0; x < 4; x++) {
     // alert(this.currentSum);
     for (var y = 3; y < 4; y++) {
-       // alert(x);
+         //alert(x +","+y +"-->"+this.grid.cellContent({ x: x, y: y }));
       tile = this.grid.cellContent({ x: x, y: y });
-      //  alert(this.currentSum);
-       // alert(tile);
+    
       if (tile != null) {
          if(isPrime(tile.value)){
             this.currentSum += tile.value;
+           //alert(x +","+y +"-->"+tile.value +"--->"+ this.currentSum);
           }
         }
       }
-    }
+    } */
+
+  if(isPrime(this.drp1))
+  {
+    this.currentSum += this.drp1;
+  }
+
+  if(isPrime(this.drp2))
+  {
+    this.currentSum += this.drp2;
+  }
+  
+  if(isPrime(this.drp3))
+  {
+    this.currentSum += this.drp3;
+  }
+  
+  if(isPrime(this.drp4))
+  {
+    this.currentSum += this.drp4;
+  }
+  
   this.actuator.updatePrimoSum(this.currentSum);
 };
 

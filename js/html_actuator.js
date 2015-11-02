@@ -5,6 +5,7 @@ function HTMLActuator() {
   this.messageContainer = document.querySelector(".game-message");
   this.targetContainer = document.querySelector(".target-container"); 
   this.currentsumContainer = document.querySelector(".currentsum-container");
+  this.storageManager = new LocalStorageManager();
 
   this.score = 0;
   this.cellId = 1;
@@ -12,7 +13,6 @@ function HTMLActuator() {
   this.drp2 = 0;
   this.drp3 = 0;
   this.drp4 = 0;
-
 }
 
 HTMLActuator.prototype.getPieceNo = function (x, y){
@@ -64,9 +64,9 @@ $( "#grid-cell12" ).droppable({
               $( this )
                 var v1 = $(ui.draggable).text()+"";
                 var drg = new Number(v1);
-                self.drp1 = self.drp1 + drg;
-                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp1+"</div></div>");
-                grid.addRandomTiles();
+                self.drp1 = drg;
+                grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp1()+"</div></div>");
             }
           });
 
@@ -75,9 +75,9 @@ $( "#grid-cell13" ).droppable({
               $( this )
                 var v1 = $(ui.draggable).text()+"";
                 var drg = new Number(v1);
-                self.drp2 = self.drp2 + drg;
-                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp2+"</div></div>");
-                grid.addRandomTiles();
+                self.drp2 = drg;
+                grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp2()+"</div></div>");
             }
           });
 $( "#grid-cell14" ).droppable({
@@ -85,10 +85,9 @@ $( "#grid-cell14" ).droppable({
               $( this )
                 var v1 = $(ui.draggable).text()+"";
                 var drg = new Number(v1);
-                self.drp3 = self.drp3 + drg;
-                $(this.append)
-                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp3+"</div></div>");
-                grid.addRandomTiles();
+                self.drp3 = drg;
+                grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp3()+"</div></div>");
             }
           });
 
@@ -97,11 +96,14 @@ $( "#grid-cell15" ).droppable({
               $( this )
                 var v1 = $(ui.draggable).text()+"";
                 var drg = new Number(v1);
-                self.drp4 = self.drp4 + drg;
-                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.drp4+"</div></div>");
-                grid.addRandomTiles();
+                self.drp4 = drg;
+                grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
+                $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp4()+"</div></div>");
             }
           });
+
+    var primoGameSum = self.storageManager.getDrp1() + self.storageManager.getDrp2() + self.storageManager.getDrp3() + self.storageManager.getDrp4();
+     if (primoGameSum == self.storageManager.getGameTarget()) self.message(true);
 
     self.updateScore(metadata.score);
     self.updateScore(metadata.score);
