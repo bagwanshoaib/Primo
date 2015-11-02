@@ -87,7 +87,7 @@ GameManager.prototype.setup = function () {
   this.storageManager.clearDrpState();
   // Reload the game from a previous game if present
   if (previousState && this.v == 0) {
-    alert("prev v=0");
+    
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
@@ -98,7 +98,7 @@ GameManager.prototype.setup = function () {
     this.currentSum  = previousState.currentSum;
 
   } else if(this.v == 1){
-    alert("prev v=1");
+    
     this.storageManager.clearGameState();
     this.storageManager.clearDrpState();
     this.storageManager.setDrp1(this.drp1);
@@ -118,7 +118,7 @@ GameManager.prototype.setup = function () {
   }
   else
   {
-    alert("else");
+    
     
     this.storageManager.clearDrpState();
     this.grid        = new Grid(this.size);
