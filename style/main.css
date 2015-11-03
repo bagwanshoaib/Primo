@@ -50,7 +50,7 @@ h1.title {
   float: right;
   text-align: right; }
 
-.score-container, .best-container, .target-container, .currentsum-container {
+.score-container, .best-container, .target-container, .currentsum-container, .totalMoves-container, .gameLevel-container {
   position: relative;
   display: inline-block;
   background: #bbada0;
@@ -63,7 +63,7 @@ h1.title {
   color: white;
   margin-top: 8px;
   text-align: center; }
-  .score-container:after, .best-container:after, .target-container:after, .currentsum-container:after {
+  .score-container:after, .best-container:after, .target-container:after, .currentsum-container:after, .totalMoves-container:after, .gameLevel-container:after {
     position: absolute;
     width: 100%;
     top: 10px;
@@ -73,7 +73,7 @@ h1.title {
     line-height: 13px;
     text-align: center;
     color: #eee4da; }
-  .score-container .score-addition, .best-container .score-addition, .target-container .currentSum-addition, .currentsum-container .currentSum-addition{
+  .score-container .score-addition, .best-container .score-addition, .target-container .currentSum-addition, .currentsum-container .currentSum-addition, .totalMoves-container .totalMoves-addition{
     position: absolute;
     right: 30px;
     color: red;
@@ -100,6 +100,12 @@ h1.title {
 
 .currentsum-container:after{
   content: "Sum";}
+
+.totalMoves-container:after{
+  content: "Moves";}
+
+.gameLevel-container:after{
+  content: "Level";}  
 
 p {
   margin-top: 0;

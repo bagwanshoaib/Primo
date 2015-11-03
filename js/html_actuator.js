@@ -5,6 +5,7 @@ function HTMLActuator() {
   this.messageContainer = document.querySelector(".game-message");
   this.targetContainer = document.querySelector(".target-container"); 
   this.currentsumContainer = document.querySelector(".currentsum-container");
+  this.totalMovesContainer = document.querySelector(".totalMoves-container");
   this.storageManager = new LocalStorageManager();
 
   this.score = 0;
@@ -13,6 +14,7 @@ function HTMLActuator() {
   this.drp2 = 0;
   this.drp3 = 0;
   this.drp4 = 0;
+  this.totalMoves = 0;
 }
 
 HTMLActuator.prototype.getPieceNo = function (x, y){
@@ -41,6 +43,8 @@ HTMLActuator.prototype.buildPieces = function (x, y){
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
 
+  alert(grid.size);
+
   window.requestAnimationFrame(function () {
     self.clearContainer(self.tileContainer);
 
@@ -67,6 +71,7 @@ $( "#grid-cell12" ).droppable({
                 self.drp1 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp1()+"</div></div>");
+                self.updatetotalMoves();
             }
           });
 
@@ -78,6 +83,7 @@ $( "#grid-cell13" ).droppable({
                 self.drp2 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp2()+"</div></div>");
+                self.updatetotalMoves();
             }
           });
 $( "#grid-cell14" ).droppable({
@@ -88,6 +94,7 @@ $( "#grid-cell14" ).droppable({
                 self.drp3 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp3()+"</div></div>");
+                self.updatetotalMoves();
             }
           });
 
@@ -99,6 +106,7 @@ $( "#grid-cell15" ).droppable({
                 self.drp4 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp4()+"</div></div>");
+                self.updatetotalMoves();
             }
           });
 
@@ -108,7 +116,7 @@ $( "#grid-cell15" ).droppable({
     self.updateScore(metadata.score);
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
-
+   
     if (metadata.terminated) {
       if (metadata.over) {
         self.message(false); // You lose
@@ -214,6 +222,20 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
 HTMLActuator.prototype.updateTarget = function (target) {
   this.clearContainer(this.targetContainer);
   this.targetContainer.textContent = target;
+};
+
+HTMLActuator.prototype.updatetotalMoves = function () {
+  this.totalMoves = this.storageManager.getTotalMoves() + 1;
+  this.clearContainer(this.totalMovesContainer);
+  this.totalMovesContainer.textContent = this.totalMoves;
+  this.storageManager.setTotalMoves(this.totalMoves);
+};
+
+HTMLActuator.prototype.updatetotalMovesTo0 = function () {
+  this.totalMoves = 0;
+  this.clearContainer(this.totalMovesContainer);
+  this.totalMovesContainer.textContent = this.totalMoves;
+  this.storageManager.setTotalMoves(this.totalMoves);
 };
 
 HTMLActuator.prototype.updatePrimoSum = function (primoSum) {

@@ -27,6 +27,7 @@ function LocalStorageManager() {
   this.drp2Key             = "drp2";
   this.drp3Key             = "drp3";
   this.drp4Key             = "drp4";
+  this.totalMovesKey       = "totalMoves";
 
   var supported = this.localStorageSupported();
 
@@ -126,6 +127,16 @@ LocalStorageManager.prototype.setDrp4 = function (drp4) {
   this.storage.setItem(this.drp4Key, JSON.stringify(drp4));
 };
 
+// Game target getters/setters and clearing
+LocalStorageManager.prototype.getTotalMoves = function () {
+  var totalMovesJSON = this.storage.getItem(this.totalMovesKey);
+  return totalMovesJSON ? JSON.parse(totalMovesJSON) : null;
+};
+
+LocalStorageManager.prototype.setTotalMoves = function (totalMoves) {
+  this.storage.setItem(this.totalMovesKey, JSON.stringify(totalMoves));
+};
+
 LocalStorageManager.prototype.clearGameState = function () {
   this.storage.removeItem(this.gameStateKey);
 };
@@ -136,4 +147,8 @@ LocalStorageManager.prototype.clearDrpState = function () {
   this.storage.removeItem(this.drp2Key);
   this.storage.removeItem(this.drp3Key);
   this.storage.removeItem(this.drp4Key);
+};
+
+LocalStorageManager.prototype.clearMovesState = function () {
+  this.storage.removeItem(this.totalMovesKey);
 };

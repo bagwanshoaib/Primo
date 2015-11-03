@@ -68,6 +68,8 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearDrpState();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
+  this.actuator.updatetotalMovesTo0();
+  this.actuator.updatePrimoSum(0);
 };
 
 // Keep playing after winning (allows going over 2048)
@@ -87,7 +89,7 @@ GameManager.prototype.setup = function () {
   this.storageManager.clearDrpState();
   // Reload the game from a previous game if present
   if (previousState && this.v == 0) {
-    
+    this.storageManager.clearMovesState();
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
@@ -98,7 +100,6 @@ GameManager.prototype.setup = function () {
     this.currentSum  = previousState.currentSum;
 
   } else if(this.v == 1){
-    
     this.storageManager.clearGameState();
     this.storageManager.clearDrpState();
     this.storageManager.setDrp1(this.drp1);
@@ -118,9 +119,8 @@ GameManager.prototype.setup = function () {
   }
   else
   {
-    
-    
     this.storageManager.clearDrpState();
+    this.storageManager.clearMovesState();
     this.grid        = new Grid(this.size);
     this.score       = 0;
     this.over        = false;
