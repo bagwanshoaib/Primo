@@ -27,7 +27,10 @@ function LocalStorageManager() {
   this.drp2Key             = "drp2";
   this.drp3Key             = "drp3";
   this.drp4Key             = "drp4";
+  this.currentLevelKey     = "currentLevel";
   this.totalMovesKey       = "totalMoves";
+  this.currentScoreKey     = "currentScore";
+  this.currentMoveKey      = "currentMove";
 
   var supported = this.localStorageSupported();
 
@@ -127,7 +130,6 @@ LocalStorageManager.prototype.setDrp4 = function (drp4) {
   this.storage.setItem(this.drp4Key, JSON.stringify(drp4));
 };
 
-// Game target getters/setters and clearing
 LocalStorageManager.prototype.getTotalMoves = function () {
   var totalMovesJSON = this.storage.getItem(this.totalMovesKey);
   return totalMovesJSON ? JSON.parse(totalMovesJSON) : null;
@@ -135,6 +137,33 @@ LocalStorageManager.prototype.getTotalMoves = function () {
 
 LocalStorageManager.prototype.setTotalMoves = function (totalMoves) {
   this.storage.setItem(this.totalMovesKey, JSON.stringify(totalMoves));
+};
+
+LocalStorageManager.prototype.getCurrentLevel = function () {
+  var currentLevelJSON = this.storage.getItem(this.currentLevelKey);
+  return currentLevelJSON ? JSON.parse(currentLevelJSON) : null;
+};
+
+LocalStorageManager.prototype.setCurrentLevel = function (currentLevel) {
+  this.storage.setItem(this.currentLevelKey, JSON.stringify(currentLevel));
+};
+
+LocalStorageManager.prototype.getCurrentScore = function () {
+  var currentScoreJSON = this.storage.getItem(this.currentScoreKey);
+  return currentScoreJSON ? JSON.parse(currentScoreJSON) : null;
+};
+
+LocalStorageManager.prototype.setCurrentScore = function (currentScore) {
+  this.storage.setItem(this.currentScoreKey, JSON.stringify(currentScore));
+};
+
+LocalStorageManager.prototype.getCurrentMove = function () {
+  var currentMoveJSON = this.storage.getItem(this.currentMoveKey);
+  return currentMoveJSON ? JSON.parse(currentMoveJSON) : null;
+};
+
+LocalStorageManager.prototype.setCurrentMove = function (currentMove) {
+  this.storage.setItem(this.currentMoveKey, JSON.stringify(currentMove));
 };
 
 LocalStorageManager.prototype.clearGameState = function () {
@@ -152,3 +181,35 @@ LocalStorageManager.prototype.clearDrpState = function () {
 LocalStorageManager.prototype.clearMovesState = function () {
   this.storage.removeItem(this.totalMovesKey);
 };
+
+LocalStorageManager.prototype.clearCurrentLevel = function () {
+  this.storage.removeItem(this.currentLevelKey);
+};
+
+LocalStorageManager.prototype.clearCurrentScore = function () {
+  this.storage.removeItem(this.currentScoreKey);
+};
+
+LocalStorageManager.prototype.clearCurrentMove = function () {
+  this.storage.removeItem(this.currentMoveKey);
+};
+
+LocalStorageManager.prototype.setLevel = function (level) {
+  var levelMul = 10;
+  if(level > 1)
+   levelMul = levelMul + (level * 2);
+
+  var scoreMul = 1000;
+  if(level > 1)
+    scoreMul = scoreMul + ((level-1) * 200);
+
+  this.clearCurrentMove();
+  this.clearCurrentScore();
+  this.clearCurrentLevel();
+  
+  this.setCurrentLevel(level);
+  this.setCurrentMove(levelMul);
+  this.setCurrentScore(scoreMul);
+};
+
+

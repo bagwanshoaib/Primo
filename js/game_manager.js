@@ -68,8 +68,9 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearDrpState();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
-  this.actuator.updatetotalMovesTo0();
+  this.actuator.updateScore(0);
   this.actuator.updatePrimoSum(0);
+  this.storageManager.setLevel(1);
 };
 
 // Keep playing after winning (allows going over 2048)
@@ -89,6 +90,7 @@ GameManager.prototype.setup = function () {
   this.storageManager.clearDrpState();
   // Reload the game from a previous game if present
   if (previousState && this.v == 0) {
+
     this.storageManager.clearMovesState();
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
@@ -98,8 +100,11 @@ GameManager.prototype.setup = function () {
     this.keepPlaying = previousState.keepPlaying;
     this.gameTarget  = previousState.gameTarget;
     this.currentSum  = previousState.currentSum;
-
+    this.storageManager.clearCurrentMove();
+    this.storageManager.setLevel(1);
+    this.actuator.updateGameLevel();
   } else if(this.v == 1){
+   
     this.storageManager.clearGameState();
     this.storageManager.clearDrpState();
     this.storageManager.setDrp1(this.drp1);
@@ -115,10 +120,10 @@ GameManager.prototype.setup = function () {
     this.gameTarget  = previousState.gameTarget;
     this.currentSum  = previousState.currentSum;
     this.addStartTiles();
-    
   }
   else
   {
+   
     this.storageManager.clearDrpState();
     this.storageManager.clearMovesState();
     this.grid        = new Grid(this.size);
@@ -142,7 +147,6 @@ GameManager.prototype.setup = function () {
 GameManager.prototype.addTarget = function () {
   
  if(this.gameTarget == ""){
-
  var num1=0, num2=0, num3=0, num4=0;
 
   num1 = Math.floor(Math.random() * 25) + 1;

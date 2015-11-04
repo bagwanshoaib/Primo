@@ -6,6 +6,7 @@ function HTMLActuator() {
   this.targetContainer = document.querySelector(".target-container"); 
   this.currentsumContainer = document.querySelector(".currentsum-container");
   this.totalMovesContainer = document.querySelector(".totalMoves-container");
+  this.gameLevelContainer = document.querySelector(".gameLevel-container");
   this.storageManager = new LocalStorageManager();
 
   this.score = 0;
@@ -14,7 +15,9 @@ function HTMLActuator() {
   this.drp2 = 0;
   this.drp3 = 0;
   this.drp4 = 0;
+  this.chkPrimoSum = 0;
   this.totalMoves = 0;
+  this.gameLevel = 0;
 }
 
 HTMLActuator.prototype.getPieceNo = function (x, y){
@@ -42,9 +45,8 @@ HTMLActuator.prototype.buildPieces = function (x, y){
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
-
-  alert(grid.size);
-
+  self.updateScore(0);
+  self.updatetotalMoves(0);
   window.requestAnimationFrame(function () {
     self.clearContainer(self.tileContainer);
 
@@ -71,7 +73,8 @@ $( "#grid-cell12" ).droppable({
                 self.drp1 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp1()+"</div></div>");
-                self.updatetotalMoves();
+                self.updatetotalMoves(1);
+                self.updateScore(100);
             }
           });
 
@@ -83,7 +86,8 @@ $( "#grid-cell13" ).droppable({
                 self.drp2 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp2()+"</div></div>");
-                self.updatetotalMoves();
+                self.updatetotalMoves(1);
+                self.updateScore(100);
             }
           });
 $( "#grid-cell14" ).droppable({
@@ -94,7 +98,8 @@ $( "#grid-cell14" ).droppable({
                 self.drp3 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp3()+"</div></div>");
-                self.updatetotalMoves();
+                self.updatetotalMoves(1);
+                self.updateScore(100);
             }
           });
 
@@ -106,26 +111,69 @@ $( "#grid-cell15" ).droppable({
                 self.drp4 = drg;
                 grid.addRandomTiles(self.drp1,self.drp2,self.drp3,self.drp4);
                 $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp4()+"</div></div>");
-                self.updatetotalMoves();
+                self.updatetotalMoves(1);
+                self.updateScore(100);
             }
           });
 
-    var primoGameSum = self.storageManager.getDrp1() + self.storageManager.getDrp2() + self.storageManager.getDrp3() + self.storageManager.getDrp4();
-     if (primoGameSum == self.storageManager.getGameTarget()) self.message(true);
-
-    self.updateScore(metadata.score);
-    self.updateScore(metadata.score);
+    //self.updateScore(metadata.score);
+    //self.updateScore(self.score);
     self.updateBestScore(metadata.bestScore);
+
+    self.GameStatus();
    
-    if (metadata.terminated) {
+   /* if (metadata.terminated) {
       if (metadata.over) {
         self.message(false); // You lose
       } else if (metadata.won) {
         self.message(true); // You win!
       }
-    }
+    } */
 
   });
+};
+
+HTMLActuator.prototype.GameStatus = function() {
+
+  if(this.isPrime(this.storageManager.getDrp1()))
+  {
+    this.chkPrimoSum += this.storageManager.getDrp1();
+  }
+
+  if(this.isPrime(this.storageManager.getDrp2()))
+  {
+    this.chkPrimoSum += this.storageManager.getDrp2();
+  }
+  
+  if(this.isPrime(this.storageManager.getDrp3()))
+  {
+    this.chkPrimoSum += this.storageManager.getDrp3();
+  }
+  
+  if(this.isPrime(this.storageManager.getDrp4()))
+  {
+    this.chkPrimoSum += this.storageManager.getDrp4();
+  }
+
+  if (this.chkPrimoSum == this.storageManager.getGameTarget()) 
+  //if (this.chkPrimoSum >= 10) 
+    this.message(true);
+  else if (this.chkPrimoSum > this.storageManager.getGameTarget())
+    this.message(false);
+  else if(this.storageManager.getCurrentMove() <= 0)
+    this.message(false);
+
+/*    this.message(true);
+  else
+    this.message(false);
+*/
+}
+
+HTMLActuator.prototype.isPrime = function(n) {
+ if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
+ var m=Math.sqrt(n);
+ for (var i=2;i<=m;i++) if (n%i==0) return false;
+ return true;
 };
 
 // Continues the game (both restart and keep playing)
@@ -199,17 +247,19 @@ HTMLActuator.prototype.positionClass = function (position) {
 };
 
 HTMLActuator.prototype.updateScore = function (score) {
+
   this.clearContainer(this.scoreContainer);
 
-  var difference = score - this.score;
-  this.score = score;
+  var difference = score;
+  this.score = this.storageManager.getCurrentScore() - difference;
 
   this.scoreContainer.textContent = this.score;
-
+  this.storageManager.setCurrentScore(this.score);
+  
   if (difference > 0) {
     var addition = document.createElement("div");
     addition.classList.add("score-addition");
-    addition.textContent = "+" + difference;
+    addition.textContent = "-" + difference;
 
     this.scoreContainer.appendChild(addition);
   }
@@ -224,18 +274,18 @@ HTMLActuator.prototype.updateTarget = function (target) {
   this.targetContainer.textContent = target;
 };
 
-HTMLActuator.prototype.updatetotalMoves = function () {
-  this.totalMoves = this.storageManager.getTotalMoves() + 1;
+HTMLActuator.prototype.updatetotalMoves = function (move) {
+  this.totalMoves = this.storageManager.getCurrentMove() - move;
   this.clearContainer(this.totalMovesContainer);
   this.totalMovesContainer.textContent = this.totalMoves;
-  this.storageManager.setTotalMoves(this.totalMoves);
+  this.storageManager.setCurrentMove(this.totalMoves);
 };
 
-HTMLActuator.prototype.updatetotalMovesTo0 = function () {
-  this.totalMoves = 0;
-  this.clearContainer(this.totalMovesContainer);
-  this.totalMovesContainer.textContent = this.totalMoves;
-  this.storageManager.setTotalMoves(this.totalMoves);
+HTMLActuator.prototype.updateGameLevel = function () {
+  this.gameLevel = this.storageManager.getCurrentLevel();
+  this.clearContainer(this.gameLevelContainer);
+  this.gameLevelContainer.textContent = this.gameLevel;
+  this.storageManager.setCurrentLevel(this.totalMoves);
 };
 
 HTMLActuator.prototype.updatePrimoSum = function (primoSum) {
