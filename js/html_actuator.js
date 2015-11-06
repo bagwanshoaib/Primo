@@ -155,8 +155,8 @@ HTMLActuator.prototype.GameStatus = function() {
     this.chkPrimoSum += this.storageManager.getDrp4();
   }
  
-  // if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
-   if (this.chkPrimoSum > 10) {
+   if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
+  // if (this.chkPrimoSum > 10) {
     this.storageManager.clearDrpState();
     this.chkPrimoSum = 0;
     this.message(true);

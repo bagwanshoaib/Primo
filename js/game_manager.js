@@ -179,11 +179,12 @@ GameManager.prototype.setup = function () {
 // Set up the target
 GameManager.prototype.addTarget = function () {
 
- var lev = $('.gameLevel-container').text();
- var max = 25 * lev;
-
  if(this.gameTarget == ""){
  var num1=0, num2=0, num3=0, num4=0;
+ var lev = $('.gameLevel-container').text();
+ 
+  var max =  25 * new Number(lev);
+  var min = 1;
 
   num1 = Math.floor(Math.random() * max) + 1;
   while(!isPrime(num1)){
