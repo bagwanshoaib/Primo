@@ -178,30 +178,34 @@ GameManager.prototype.setup = function () {
 
 // Set up the target
 GameManager.prototype.addTarget = function () {
-  
+
+ var lev = $('.gameLevel-container').text();
+ var max = 25 * lev;
+
  if(this.gameTarget == ""){
  var num1=0, num2=0, num3=0, num4=0;
 
-  num1 = Math.floor(Math.random() * 25) + 1;
+  num1 = Math.floor(Math.random() * max) + 1;
   while(!isPrime(num1)){
-    num1 = Math.floor(Math.random() * 25) + 1;
+    num1 = Math.floor(Math.random() * max) + 1;
   } 
 
-  num2 = Math.floor(Math.random() * 25) + 1;
+  num2 = Math.floor(Math.random() * max) + 1;
   while(!isPrime(num2)){
-    num2 = Math.floor(Math.random() * 25) + 1;
+    num2 = Math.floor(Math.random() * max) + 1;
   }
 
-  num3 = Math.floor(Math.random() * 25) + 1;
+  num3 = Math.floor(Math.random() * max) + 1;
   while(!isPrime(num3)){
-    num3 = Math.floor(Math.random() * 25) + 1;
+    num3 = Math.floor(Math.random() * max) + 1;
   }
 
-  num4 = Math.floor(Math.random() * 25) + 1;
+  num4 = Math.floor(Math.random() * max) + 1;
   while(!isPrime(num4)){
-    num4 = Math.floor(Math.random() * 25) + 1;
+    num4 = Math.floor(Math.random() * max) + 1;
   }
 
+alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4);
   this.gameTarget = num1 + num2 + num3 + num4;
 }
   this.actuator.updateTarget(this.gameTarget);
