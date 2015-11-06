@@ -205,7 +205,7 @@ GameManager.prototype.addTarget = function () {
     num4 = Math.floor(Math.random() * max) + 1;
   }
 
-alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4);
+ //alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4);
   this.gameTarget = num1 + num2 + num3 + num4;
 }
   this.actuator.updateTarget(this.gameTarget);
