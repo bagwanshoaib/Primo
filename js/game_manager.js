@@ -4,7 +4,9 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
   this.storageManager = new StorageManager;
   this.actuator       = new Actuator;
   this.v = v;
-
+  this.currentLevel = this.storageManager.getCurrentLevel() + 1;
+  this.bonusScore = 0;
+  
   if(drp1==0)
   {
     this.drp1 = this.storageManager.getDrp1();
@@ -61,22 +63,53 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
                               
 }
 
-// Restart the game
+// g the game
 GameManager.prototype.restart = function () {
+  $('#grid-cell12').empty();
+  $('#grid-cell13').empty();
+  $('#grid-cell14').empty();
+  $('#grid-cell15').empty();
+  
   this.v = 0;
+  this.currentLevel = 0;
+  this.drp1 = 0;
+  this.drp2 = 0;
+  this.drp3 = 0;
+  this.drp4 = 0;
+  
+  this.storageManager.clearCurrentLevel();
+  this.storageManager.clearGameState();
+  this.storageManager.clearDrpState();
+  this.storageManager.clearBonusScore();
+  this.actuator.continueGame(); // Clear the game won/lost message
+  this.setup();
+  this.actuator.updateScore(0);
+  this.actuator.updatePrimoSum(0);
+  this.storageManager.setLevel(1); 
+  this.actuator.updateGameLevel();
+};
+
+// Keep playing after winning (allows going over 2048)
+GameManager.prototype.keepPlaying = function () { 
+  this.keepPlaying = true;
+  $('#grid-cell12').empty();
+  $('#grid-cell13').empty();
+  $('#grid-cell14').empty();
+  $('#grid-cell15').empty();
+
+  this.v = 0;
+  this.drp1 = 0;
+  this.drp2 = 0;
+  this.drp3 = 0;
+  this.drp4 = 0;
+  this.bonusScore = this.storageManager.getCurrentScore();
   this.storageManager.clearGameState();
   this.storageManager.clearDrpState();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
   this.actuator.updateScore(0);
   this.actuator.updatePrimoSum(0);
-  this.storageManager.setLevel(1);
-};
-
-// Keep playing after winning (allows going over 2048)
-GameManager.prototype.keepPlaying = function () {
-  this.keepPlaying = true;
-  this.actuator.continueGame(); // Clear the game won/lost message
+  this.storageManager.setLevel(this.currentLevel); 
 };
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
@@ -435,7 +468,6 @@ GameManager.prototype.setupPrimoSum = function () {
   {
     this.currentSum += this.drp4;
   }
-  
   this.actuator.updatePrimoSum(this.currentSum);
 };
 

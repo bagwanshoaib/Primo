@@ -31,6 +31,7 @@ function LocalStorageManager() {
   this.totalMovesKey       = "totalMoves";
   this.currentScoreKey     = "currentScore";
   this.currentMoveKey      = "currentMove";
+  this.bonusScoreKey       = "bonusScore";
 
   var supported = this.localStorageSupported();
 
@@ -166,6 +167,15 @@ LocalStorageManager.prototype.setCurrentMove = function (currentMove) {
   this.storage.setItem(this.currentMoveKey, JSON.stringify(currentMove));
 };
 
+LocalStorageManager.prototype.getBonusScore = function () {
+  var bonusScoreJSON = this.storage.getItem(this.bonusScoreKey);
+  return bonusScoreJSON ? JSON.parse(bonusScoreJSON) : null;
+};
+
+LocalStorageManager.prototype.setBonusScore = function (bonusScore) {
+  this.storage.setItem(this.bonusScoreKey, JSON.stringify(bonusScore));
+};
+
 LocalStorageManager.prototype.clearGameState = function () {
   this.storage.removeItem(this.gameStateKey);
 };
@@ -194,10 +204,15 @@ LocalStorageManager.prototype.clearCurrentMove = function () {
   this.storage.removeItem(this.currentMoveKey);
 };
 
+LocalStorageManager.prototype.clearBonusScore = function () {
+  this.storage.removeItem(this.bonusScoreKey);
+};
+
+
 LocalStorageManager.prototype.setLevel = function (level) {
   var levelMul = 10;
   if(level > 1)
-   levelMul = levelMul + (level * 2);
+   levelMul = levelMul + ((level-1) * 2);
 
   var scoreMul = 1000;
   if(level > 1)

@@ -47,6 +47,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
   self.updateScore(0);
   self.updatetotalMoves(0);
+  self.updateGameLevel();
   window.requestAnimationFrame(function () {
     self.clearContainer(self.tileContainer);
 
@@ -119,7 +120,6 @@ $( "#grid-cell15" ).droppable({
     //self.updateScore(metadata.score);
     //self.updateScore(self.score);
     self.updateBestScore(metadata.bestScore);
-
     self.GameStatus();
    
    /* if (metadata.terminated) {
@@ -154,20 +154,36 @@ HTMLActuator.prototype.GameStatus = function() {
   {
     this.chkPrimoSum += this.storageManager.getDrp4();
   }
-
-  if (this.chkPrimoSum == this.storageManager.getGameTarget()) 
-  //if (this.chkPrimoSum >= 10) 
+ 
+  // if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
+   if (this.chkPrimoSum > 10) {
+    this.storageManager.clearDrpState();
+    this.chkPrimoSum = 0;
     this.message(true);
-  else if (this.chkPrimoSum > this.storageManager.getGameTarget())
+  }
+  else if (this.chkPrimoSum > this.storageManager.getGameTarget()){
+    this.storageManager.clearDrpState();
+    this.chkPrimoSum = 0;
     this.message(false);
-  else if(this.storageManager.getCurrentMove() <= 0)
+  }
+  else if(this.storageManager.getCurrentMove() <= 0){
+    this.storageManager.clearDrpState();
+    this.chkPrimoSum = 0;
     this.message(false);
+  }
 
 /*    this.message(true);
   else
     this.message(false);
 */
 }
+
+HTMLActuator.prototype.isPrime = function(n) {
+ if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
+ var m=Math.sqrt(n);
+ for (var i=2;i<=m;i++) if (n%i==0) return false;
+ return true;
+};
 
 HTMLActuator.prototype.isPrime = function(n) {
  if (isNaN(n) || !isFinite(n) || n%1 || n<2) return false; 
@@ -285,7 +301,7 @@ HTMLActuator.prototype.updateGameLevel = function () {
   this.gameLevel = this.storageManager.getCurrentLevel();
   this.clearContainer(this.gameLevelContainer);
   this.gameLevelContainer.textContent = this.gameLevel;
-  this.storageManager.setCurrentLevel(this.totalMoves);
+  this.storageManager.setCurrentLevel(this.gameLevel);
 };
 
 HTMLActuator.prototype.updatePrimoSum = function (primoSum) {
@@ -320,5 +336,4 @@ HTMLActuator.prototype.clearMessage = function () {
   // IE only takes one value to remove at a time.
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
-  $('.tile-32').remove();
 };

@@ -1,6 +1,6 @@
 function KeyboardInputManager() {
   this.events = {};
-
+   
   if (window.navigator.msPointerEnabled) {
     //Internet Explorer 10 style
     this.eventTouchstart    = "MSPointerDown";
@@ -11,8 +11,7 @@ function KeyboardInputManager() {
     this.eventTouchmove     = "touchmove";
     this.eventTouchend      = "touchend";
   }
- 
-  this.setupPieces();
+
   this.listen();
 }
 
