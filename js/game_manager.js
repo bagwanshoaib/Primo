@@ -185,9 +185,11 @@ GameManager.prototype.addTarget = function () {
   var num1=0, num2=0, num3=0, num4=0;
   var lev = this.storageManager.getCurrentLevel(); //$('.gameLevel-container').text();
   if (lev == null) {lev = 1;};
-  var max =  25 * new Number(lev);
+  
   var min = 1;
-  if (lev > 1) {min = 25 * (lev-1);};
+  if (lev > 1) {min = (10 * lev) + 5;};
+  var max =  25;
+  if (lev > 1) {max = (10 * (lev + 1)) + 5;};
 
   num1 = Math.floor(Math.random()*(max-min+1)+min);
   while(!isPrime(num1)){
