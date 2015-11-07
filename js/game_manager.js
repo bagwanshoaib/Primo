@@ -123,7 +123,6 @@ GameManager.prototype.setup = function () {
   this.storageManager.clearDrpState();
   // Reload the game from a previous game if present
   if (previousState && this.v == 0) {
-
     this.storageManager.clearMovesState();
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
@@ -137,7 +136,6 @@ GameManager.prototype.setup = function () {
     this.storageManager.setLevel(1);
     this.actuator.updateGameLevel();
   } else if(this.v == 1){
-   
     this.storageManager.clearGameState();
     this.storageManager.clearDrpState();
     this.storageManager.setDrp1(this.drp1);
@@ -156,7 +154,6 @@ GameManager.prototype.setup = function () {
   }
   else
   {
-   
     this.storageManager.clearDrpState();
     this.storageManager.clearMovesState();
     this.grid        = new Grid(this.size);
@@ -167,6 +164,11 @@ GameManager.prototype.setup = function () {
     this.gameTarget  = 0;
     this.currentSum  = 0;
     // Add the initial tiles
+    var lev = this.storageManager.getCurrentLevel();
+    if (lev == 0 || lev == null) {lev = 1;};
+    
+    this.storageManager.setLevel(lev);
+    this.actuator.updateGameLevel();
     this.addStartTiles();
   }
   
@@ -180,33 +182,34 @@ GameManager.prototype.setup = function () {
 GameManager.prototype.addTarget = function () {
 
  if(this.gameTarget == ""){
- var num1=0, num2=0, num3=0, num4=0;
- var lev = $('.gameLevel-container').text();
- 
+  var num1=0, num2=0, num3=0, num4=0;
+  var lev = this.storageManager.getCurrentLevel(); //$('.gameLevel-container').text();
+  if (lev == null) {lev = 1;};
   var max =  25 * new Number(lev);
   var min = 1;
+  if (lev > 1) {min = 25 * (lev-1);};
 
-  num1 = Math.floor(Math.random() * max) + 1;
+  num1 = Math.floor(Math.random()*(max-min+1)+min);
   while(!isPrime(num1)){
-    num1 = Math.floor(Math.random() * max) + 1;
+    num1 = Math.floor(Math.random()*(max-min+1)+min);
   } 
 
-  num2 = Math.floor(Math.random() * max) + 1;
+  num2 = Math.floor(Math.random()*(max-min+1)+min);
   while(!isPrime(num2)){
-    num2 = Math.floor(Math.random() * max) + 1;
+    num2 = Math.floor(Math.random()*(max-min+1)+min);
   }
 
-  num3 = Math.floor(Math.random() * max) + 1;
+  num3 = Math.floor(Math.random()*(max-min+1)+min);
   while(!isPrime(num3)){
-    num3 = Math.floor(Math.random() * max) + 1;
+    num3 = Math.floor(Math.random()*(max-min+1)+min);
   }
 
-  num4 = Math.floor(Math.random() * max) + 1;
+  num4 = Math.floor(Math.random()*(max-min+1)+min);
   while(!isPrime(num4)){
-    num4 = Math.floor(Math.random() * max) + 1;
+    num4 = Math.floor(Math.random()*(max-min+1)+min);
   }
 
- //alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4);
+ //alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4 +" "+min);
   this.gameTarget = num1 + num2 + num3 + num4;
 }
   this.actuator.updateTarget(this.gameTarget);
