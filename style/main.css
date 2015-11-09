@@ -53,7 +53,7 @@ h1.title {
 .score-container, .best-container, .target-container, .currentsum-container, .totalMoves-container, .gameLevel-container {
   position: relative;
   display: inline-block;
-  background: #bbada0;
+  background: #607d8b;
   padding: 15px 25px;
   font-size: 25px;
   height: 25px;
@@ -504,7 +504,7 @@ hr {
 
 .restart-button {
   display: inline-block;
-  background: #8f7a66;
+  background: #607D8B;
   border-radius: 3px;
   padding: 0 20px;
   text-decoration: none;
