@@ -187,9 +187,10 @@ GameManager.prototype.addTarget = function () {
   if (lev == null) {lev = 1;};
   
   var min = 1;
-  if (lev > 1) {min = (10 * lev) + 5;};
+  //if (lev > 1) {min = (10 * lev) + 5;};
   var max =  25;
-  if (lev > 1) {max = (10 * (lev + 1)) + 5;};
+  //if (lev > 1) {max = (10 * (lev + 1)) + 5;};
+  if (lev > 1) {max = (25 + ((lev-1) * 5));};
 
   num1 = Math.floor(Math.random()*(max-min+1)+min);
   while(!isPrime(num1)){
