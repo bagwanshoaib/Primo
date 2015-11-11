@@ -53,7 +53,6 @@ LocalStorageManager.prototype.localStorageSupported = function () {
 
 // Best score getters/setters
 LocalStorageManager.prototype.getBestScore = function () {
-  
   return this.storage.getItem(this.bestScoreKey) || 0;
 };
 
@@ -208,6 +207,9 @@ LocalStorageManager.prototype.clearBonusScore = function () {
   this.storage.removeItem(this.bonusScoreKey);
 };
 
+LocalStorageManager.prototype.clearBestScore = function () {
+  this.storage.removeItem(this.bestScoreKey);
+};
 
 LocalStorageManager.prototype.setLevel = function (level) {
   var levelMul = 10;
@@ -217,6 +219,10 @@ LocalStorageManager.prototype.setLevel = function (level) {
   var scoreMul = 1000;
   if(level > 1)
     scoreMul = scoreMul + ((level-1) * 200);
+
+  levelMul = levelMul + new Number(this.getBestScore() != null ? this.getBestScore()/100 : 0);
+  scoreMul = scoreMul + new Number(this.getBestScore());
+ 
 
   this.clearCurrentMove();
   this.clearCurrentScore();

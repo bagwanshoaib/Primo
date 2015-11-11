@@ -55,7 +55,7 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
 
   this._mouse;
 
-  this.inputManager.on("move", this.move.bind(this));
+  //this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
@@ -80,7 +80,7 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearCurrentLevel();
   this.storageManager.clearGameState();
   this.storageManager.clearDrpState();
-  this.storageManager.clearBonusScore();
+  this.storageManager.clearBestScore();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
   this.actuator.updateScore(0);
@@ -102,7 +102,6 @@ GameManager.prototype.keepPlaying = function () {
   this.drp2 = 0;
   this.drp3 = 0;
   this.drp4 = 0;
-  this.bonusScore = this.storageManager.getCurrentScore();
   this.storageManager.clearGameState();
   this.storageManager.clearDrpState();
   this.actuator.continueGame(); // Clear the game won/lost message
@@ -124,6 +123,7 @@ GameManager.prototype.setup = function () {
   // Reload the game from a previous game if present
   if (previousState && this.v == 0) {
     this.storageManager.clearMovesState();
+    this.storageManager.clearBestScore();
     this.grid        = new Grid(previousState.grid.size,
                                 previousState.grid.cells); // Reload grid
     this.score       = previousState.score;
@@ -135,6 +135,7 @@ GameManager.prototype.setup = function () {
     this.storageManager.clearCurrentMove();
     this.storageManager.setLevel(1);
     this.actuator.updateGameLevel();
+    
   } else if(this.v == 1){
     this.storageManager.clearGameState();
     this.storageManager.clearDrpState();

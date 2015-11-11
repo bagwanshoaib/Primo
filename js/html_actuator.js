@@ -79,7 +79,6 @@ $( "#grid-cell12" ).droppable({
                 else
                   $(this).append("<div class='tile tile-32 tile-position-1-1 tile-merged'><div class='tile-inner'>"+self.storageManager.getDrp1()+"</div></div>");
                 
-                
                 self.updatetotalMoves(1);
                 self.updateScore(100);
             }
@@ -140,7 +139,7 @@ $( "#grid-cell15" ).droppable({
 
     //self.updateScore(metadata.score);
     //self.updateScore(self.score);
-    self.updateBestScore(metadata.bestScore);
+    //self.updateBestScore(metadata.bestScore);
     self.GameStatus();
    
    /* if (metadata.terminated) {
@@ -178,7 +177,7 @@ HTMLActuator.prototype.GameStatus = function() {
  
   //alert("sum:- "+this.chkPrimoSum +" target:-"+this.storageManager.getGameTarget() +" current move:-"+this.storageManager.getCurrentMove());
   if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
-  // if (this.chkPrimoSum > 10) {
+   //if (this.chkPrimoSum > 10) {
     this.storageManager.clearDrpState();
     this.chkPrimoSum = 0;
     this.message(true);
@@ -304,6 +303,7 @@ HTMLActuator.prototype.updateScore = function (score) {
 };
 
 HTMLActuator.prototype.updateBestScore = function (bestScore) {
+  this.storageManager.setBestScore(bestScore); 
   this.bestContainer.textContent = bestScore;
 };
 
@@ -348,7 +348,8 @@ HTMLActuator.prototype.updatePrimoSum = function (primoSum) {
 
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
-  var message = won ? "You win!" : "Game over!";
+  var message = won ? "You win!" : "Game over!"; 
+  var highscore = won ? this.updateBestScore(this.storageManager.getCurrentScore()) : this.updateBestScore(0);
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
