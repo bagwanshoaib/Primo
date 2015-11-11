@@ -52,12 +52,16 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
   this._pieceHeight=0;
   this._currentPiece=0;
   this._currentDropPiece=0;  
+  this.prevGameTarget = 0;
 
   this._mouse;
 
   //this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("tutorial", this.tutorial.bind(this));
+  this.inputManager.on("close", this.close.bind(this));
+
 
   this.setup();
                               
@@ -77,6 +81,7 @@ GameManager.prototype.restart = function () {
   this.drp3 = 0;
   this.drp4 = 0;
   
+  this.prevGameTarget = 0;
   this.storageManager.clearCurrentLevel();
   this.storageManager.clearGameState();
   this.storageManager.clearDrpState();
@@ -103,13 +108,23 @@ GameManager.prototype.keepPlaying = function () {
   this.drp2 = 0;
   this.drp3 = 0;
   this.drp4 = 0;
+  this.prevGameTarget = this.storageManager.getGameTarget();
   this.storageManager.clearGameState();
   this.storageManager.clearDrpState();
+  this.storageManager.clearGameTarget();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
   this.actuator.updateScore(0);
   this.actuator.updatePrimoSum(0);
   this.storageManager.setLevel(this.currentLevel); 
+};
+
+GameManager.prototype.tutorial = function() {
+ this.actuator.tutorial();
+};
+
+GameManager.prototype.close = function() {
+ this.actuator.close();
 };
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
@@ -215,7 +230,13 @@ GameManager.prototype.addTarget = function () {
   }
 
  //alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4 +" "+min);
+
   this.gameTarget = num1 + num2 + num3 + num4;
+
+//  alert(this.prevGameTarget +" "+this.gameTarget);
+
+ // if (this.prevGameTarget != 0 && this.gameTarget <= this.prevGameTarget ) {this.addTarget();};
+
 }
   this.actuator.updateTarget(this.gameTarget);
 };

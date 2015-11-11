@@ -168,6 +168,32 @@ hr {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
+  .game-container .game-tutorial{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.5);
+    z-index: 100;
+    text-align: center;
+    -webkit-animation: fade-in 800ms ease 1200ms;
+    -moz-animation: fade-in 800ms ease 1200ms;
+    animation: fade-in 800ms ease 1200ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+   .game-container .game-tutorial.show{
+    display: inline-block;
+    background: rgba(237, 194, 46, 0.5);
+    color: #f9f6f2;
+  }
+   .game-container .game-tutorial .lower {
+      display: block;
+      margin-top: 10px; }
+
   .game-container .game-message {
     display: none;
     position: absolute;
@@ -515,6 +541,19 @@ hr {
   text-align: center;
   float: right; }
 
+  .tutorial-button {
+  display: inline-block;
+  background: #607D8B;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  display: block;
+  text-align: center;
+  float: left; }
+
 .game-explanation {
   margin-top: 50px; }
 
@@ -549,6 +588,13 @@ hr {
     line-height: 1.65; }
 
   .restart-button {
+    width: 42%;
+    padding: 0;
+    display: block;
+    box-sizing: border-box;
+    margin-top: 2px; }
+
+    .tutorial-button {
     width: 42%;
     padding: 0;
     display: block;
