@@ -211,6 +211,10 @@ LocalStorageManager.prototype.clearBestScore = function () {
   this.storage.removeItem(this.bestScoreKey);
 };
 
+LocalStorageManager.prototype.clearGameTarget = function () {
+  this.storage.removeItem(this.gametargetKey);
+};
+
 LocalStorageManager.prototype.setLevel = function (level) {
   var levelMul = 10;
   if(level > 1)

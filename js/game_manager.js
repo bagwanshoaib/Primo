@@ -80,6 +80,7 @@ GameManager.prototype.restart = function () {
   this.storageManager.clearCurrentLevel();
   this.storageManager.clearGameState();
   this.storageManager.clearDrpState();
+  this.storageManager.clearGameTarget();
   this.storageManager.clearBestScore();
   this.actuator.continueGame(); // Clear the game won/lost message
   this.setup();
