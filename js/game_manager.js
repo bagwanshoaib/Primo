@@ -60,8 +60,7 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
   this.inputManager.on("tutorial", this.tutorial.bind(this));
-  this.inputManager.on("close", this.close.bind(this));
-
+  this.inputManager.on("closeButton", this.closeButton.bind(this));
 
   this.setup();
                               
@@ -123,8 +122,8 @@ GameManager.prototype.tutorial = function() {
  this.actuator.tutorial();
 };
 
-GameManager.prototype.close = function() {
- this.actuator.close();
+GameManager.prototype.closeButton = function() {
+ this.actuator.closeButton();
 };
 
 // Return true if the game is lost, or has won and the user hasn't kept playing

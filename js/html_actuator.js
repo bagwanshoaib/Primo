@@ -177,8 +177,8 @@ HTMLActuator.prototype.GameStatus = function() {
   }
  
   //alert("sum:- "+this.chkPrimoSum +" target:-"+this.storageManager.getGameTarget() +" current move:-"+this.storageManager.getCurrentMove());
-  //if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
-   if (this.chkPrimoSum > 10) {
+  if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
+  // if (this.chkPrimoSum > 10) {
     this.storageManager.clearDrpState();
     this.chkPrimoSum = 0;
     this.message(true);
@@ -217,7 +217,6 @@ HTMLActuator.prototype.isPrime = function(n) {
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continueGame = function () {
   this.clearMessage();
-  this.clearTutorial();
 };
 
 HTMLActuator.prototype.clearContainer = function (container) {
@@ -367,7 +366,7 @@ HTMLActuator.prototype.tutorial = function () {
   this.gameTutorialContainer.classList.add("show");
 };
 
-HTMLActuator.prototype.close = function () {
+HTMLActuator.prototype.closeButton = function () {
   // IE only takes one value to remove at a time.
   this.gameTutorialContainer.classList.remove("show");
 };
