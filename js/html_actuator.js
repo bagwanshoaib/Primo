@@ -178,18 +178,25 @@ HTMLActuator.prototype.GameStatus = function() {
  
   //alert("sum:- "+this.chkPrimoSum +" target:-"+this.storageManager.getGameTarget() +" current move:-"+this.storageManager.getCurrentMove());
   if (this.chkPrimoSum == this.storageManager.getGameTarget()) {
+    alert("game target 1 "+this.storageManager.getGameTarget());
   // if (this.chkPrimoSum > 10) {
     this.storageManager.clearDrpState();
+    this.storageManager.clearGameTarget();
     this.chkPrimoSum = 0;
     this.message(true);
   }
   else if (this.chkPrimoSum > this.storageManager.getGameTarget()){
+    alert("game target 2 "+this.storageManager.getGameTarget());
     this.storageManager.clearDrpState();
+    this.storageManager.clearGameTarget();
     this.chkPrimoSum = 0;
     this.message(false);
   }
-  else if(this.storageManager.getCurrentMove() <= 0){
+  else if(this.storageManager.getCurrentMove() == 0){
+    alert("current move "+this.storageManager.getCurrentMove());
     this.storageManager.clearDrpState();
+    this.storageManager.clearGameTarget();
+    this.updatetotalMoves(1);
     this.chkPrimoSum = 0;
     this.message(false);
   }

@@ -5,7 +5,6 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
   this.actuator       = new Actuator;
   this.v = v;
   this.currentLevel = this.storageManager.getCurrentLevel() + 1;
-  this.bonusScore = 0;
   
   if(drp1==0)
   {
@@ -45,16 +44,8 @@ function GameManager(size, InputManager, Actuator, StorageManager, v, drp1, drp2
 
 
   this.startTiles = 4;
-  this._pieces = 0;
-  this._puzzleWidth=0;
-  this._puzzleHeight=0;
-  this._pieceWidth=0;
-  this._pieceHeight=0;
-  this._currentPiece=0;
-  this._currentDropPiece=0;  
+  
   this.prevGameTarget = 0;
-
-  this._mouse;
 
   //this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -228,15 +219,13 @@ GameManager.prototype.addTarget = function () {
     num4 = Math.floor(Math.random()*(max-min+1)+min);
   }
 
- //alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4 +" "+min);
+  //alert(max +" "+ num1 +" "+ num2 +" "+ num3 +" "+ num4 +" "+min);
 
   this.gameTarget = num1 + num2 + num3 + num4;
 
-//  alert(this.prevGameTarget +" "+this.gameTarget);
-
- // if (this.prevGameTarget != 0 && this.gameTarget <= this.prevGameTarget ) {this.addTarget();};
-
 }
+  //alert(this.prevGameTarget +" "+this.gameTarget);
+  if (this.prevGameTarget != 0 && this.gameTarget <= this.prevGameTarget ) {this.gameTarget =0; this.addTarget();};
   this.actuator.updateTarget(this.gameTarget);
 };
 
