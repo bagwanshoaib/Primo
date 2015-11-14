@@ -115,9 +115,3 @@ Grid.prototype.serialize = function () {
     cells: cellState
   };
 };
-
-// Adds a tile in a random position
-Grid.prototype.addRandomTiles = function (drp1,drp2,drp3,drp4) {
-  new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager,1,drp1,drp2,drp3,drp4);
-};
-

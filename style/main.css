@@ -93,7 +93,7 @@ h1.title {
   content: "Score"; }
 
 .best-container:after {
-  content: "Best"; }
+  content: "Bonus"; }
 
 .target-container:after{
     content: "Target";}

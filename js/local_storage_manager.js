@@ -22,19 +22,15 @@ function LocalStorageManager() {
   this.bestScoreKey     = "bestScore";
   this.gameStateKey     = "gameState";
   this.gametargetKey    = "gameTarget";
-  this.currentSumKey    = "currentSum";
   this.drp1Key             = "drp1";
   this.drp2Key             = "drp2";
   this.drp3Key             = "drp3";
   this.drp4Key             = "drp4";
   this.currentLevelKey     = "currentLevel";
-  this.totalMovesKey       = "totalMoves";
-  this.currentScoreKey     = "currentScore";
   this.currentMoveKey      = "currentMove";
-  this.bonusScoreKey       = "bonusScore";
+  this.currentScoreKey     = "currentScore";
 
   var supported = this.localStorageSupported();
-
   this.storage = supported ? window.localStorage : window.fakeStorage;
 }
 
@@ -60,6 +56,10 @@ LocalStorageManager.prototype.setBestScore = function (score) {
   this.storage.setItem(this.bestScoreKey, score);
 };
 
+LocalStorageManager.prototype.clearBestScore = function () {
+  this.storage.removeItem(this.bestScoreKey);
+};
+
 // Game state getters/setters and clearing
 LocalStorageManager.prototype.getGameState = function () {
   var stateJSON = this.storage.getItem(this.gameStateKey);
@@ -70,24 +70,8 @@ LocalStorageManager.prototype.setGameState = function (gameState) {
   this.storage.setItem(this.gameStateKey, JSON.stringify(gameState));
 };
 
-// Game target getters/setters and clearing
-LocalStorageManager.prototype.getGameTarget = function () {
-  var targetJSON = this.storage.getItem(this.gametargetKey);
-  return targetJSON ? JSON.parse(targetJSON) : null;
-};
-
-LocalStorageManager.prototype.setGameTarget = function (gameTarget) {
-  this.storage.setItem(this.gametargetKey, JSON.stringify(gameTarget));
-};
-
-// Game target getters/setters and clearing
-LocalStorageManager.prototype.getCurrentSum = function () {
-  var currentSumJSON = this.storage.getItem(this.currentSumKey);
-  return currentSumJSON ? JSON.parse(currentSumJSON) : null;
-};
-
-LocalStorageManager.prototype.setCurrentSum = function (currentSum) {
-  this.storage.setItem(this.currentSumKey, JSON.stringify(currentSum));
+LocalStorageManager.prototype.clearGameState = function () {
+  this.storage.removeItem(this.gameStateKey);
 };
 
 // Game target getters/setters and clearing
@@ -130,15 +114,14 @@ LocalStorageManager.prototype.setDrp4 = function (drp4) {
   this.storage.setItem(this.drp4Key, JSON.stringify(drp4));
 };
 
-LocalStorageManager.prototype.getTotalMoves = function () {
-  var totalMovesJSON = this.storage.getItem(this.totalMovesKey);
-  return totalMovesJSON ? JSON.parse(totalMovesJSON) : null;
+LocalStorageManager.prototype.clearDrp = function () {
+  this.storage.removeItem(this.drp1Key);
+  this.storage.removeItem(this.drp2Key);
+  this.storage.removeItem(this.drp3Key);
+  this.storage.removeItem(this.drp4Key);
 };
 
-LocalStorageManager.prototype.setTotalMoves = function (totalMoves) {
-  this.storage.setItem(this.totalMovesKey, JSON.stringify(totalMoves));
-};
-
+// Game level getters/setters and clearing
 LocalStorageManager.prototype.getCurrentLevel = function () {
   var currentLevelJSON = this.storage.getItem(this.currentLevelKey);
   return currentLevelJSON ? JSON.parse(currentLevelJSON) : null;
@@ -148,13 +131,8 @@ LocalStorageManager.prototype.setCurrentLevel = function (currentLevel) {
   this.storage.setItem(this.currentLevelKey, JSON.stringify(currentLevel));
 };
 
-LocalStorageManager.prototype.getCurrentScore = function () {
-  var currentScoreJSON = this.storage.getItem(this.currentScoreKey);
-  return currentScoreJSON ? JSON.parse(currentScoreJSON) : null;
-};
-
-LocalStorageManager.prototype.setCurrentScore = function (currentScore) {
-  this.storage.setItem(this.currentScoreKey, JSON.stringify(currentScore));
+LocalStorageManager.prototype.clearCurrentLevel = function () {
+  this.storage.removeItem(this.currentLevelKey);
 };
 
 LocalStorageManager.prototype.getCurrentMove = function () {
@@ -166,49 +144,31 @@ LocalStorageManager.prototype.setCurrentMove = function (currentMove) {
   this.storage.setItem(this.currentMoveKey, JSON.stringify(currentMove));
 };
 
-LocalStorageManager.prototype.getBonusScore = function () {
-  var bonusScoreJSON = this.storage.getItem(this.bonusScoreKey);
-  return bonusScoreJSON ? JSON.parse(bonusScoreJSON) : null;
+LocalStorageManager.prototype.clearCurrentMove = function () {
+  this.storage.removeItem(this.currentMoveKey);
 };
 
-LocalStorageManager.prototype.setBonusScore = function (bonusScore) {
-  this.storage.setItem(this.bonusScoreKey, JSON.stringify(bonusScore));
+LocalStorageManager.prototype.getCurrentScore = function () {
+  var currentScoreJSON = this.storage.getItem(this.currentScoreKey);
+  return currentScoreJSON ? JSON.parse(currentScoreJSON) : null;
 };
 
-LocalStorageManager.prototype.clearGameState = function () {
-  this.storage.removeItem(this.gameStateKey);
-};
-
-LocalStorageManager.prototype.clearDrpState = function () {
-  this.storage.removeItem(this.currentSumKey);
-  this.storage.removeItem(this.drp1Key);
-  this.storage.removeItem(this.drp2Key);
-  this.storage.removeItem(this.drp3Key);
-  this.storage.removeItem(this.drp4Key);
-};
-
-LocalStorageManager.prototype.clearMovesState = function () {
-  this.storage.removeItem(this.totalMovesKey);
-};
-
-LocalStorageManager.prototype.clearCurrentLevel = function () {
-  this.storage.removeItem(this.currentLevelKey);
+LocalStorageManager.prototype.setCurrentScore = function (currentScore) {
+  this.storage.setItem(this.currentScoreKey, JSON.stringify(currentScore));
 };
 
 LocalStorageManager.prototype.clearCurrentScore = function () {
   this.storage.removeItem(this.currentScoreKey);
 };
 
-LocalStorageManager.prototype.clearCurrentMove = function () {
-  this.storage.removeItem(this.currentMoveKey);
+// Game target getters/setters and clearing
+LocalStorageManager.prototype.getGameTarget = function () {
+  var targetJSON = this.storage.getItem(this.gametargetKey);
+  return targetJSON ? JSON.parse(targetJSON) : null;
 };
 
-LocalStorageManager.prototype.clearBonusScore = function () {
-  this.storage.removeItem(this.bonusScoreKey);
-};
-
-LocalStorageManager.prototype.clearBestScore = function () {
-  this.storage.removeItem(this.bestScoreKey);
+LocalStorageManager.prototype.setGameTarget = function (gameTarget) {
+  this.storage.setItem(this.gametargetKey, JSON.stringify(gameTarget));
 };
 
 LocalStorageManager.prototype.clearGameTarget = function () {
@@ -226,7 +186,6 @@ LocalStorageManager.prototype.setLevel = function (level) {
 
   levelMul = levelMul + new Number(this.getBestScore() != null ? this.getBestScore()/100 : 0);
   scoreMul = scoreMul + new Number(this.getBestScore());
- 
 
   this.clearCurrentMove();
   this.clearCurrentScore();
@@ -236,5 +195,3 @@ LocalStorageManager.prototype.setLevel = function (level) {
   this.setCurrentMove(levelMul);
   this.setCurrentScore(scoreMul);
 };
-
-
