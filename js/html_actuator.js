@@ -7,6 +7,7 @@ function HTMLActuator() {
   this.targetContainer = document.querySelector(".target-container"); 
   this.totalMovesContainer = document.querySelector(".totalMoves-container");
   this.currentsumContainer = document.querySelector(".currentsum-container");
+  this.gameTutorialContainer = document.querySelector(".game-tutorial");
   this.storageManager = new LocalStorageManager();
 
   this.score = 0;
@@ -469,4 +470,13 @@ HTMLActuator.prototype.clearMessage = function () {
   // IE only takes one value to remove at a time.
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
+};
+
+HTMLActuator.prototype.tutorial = function () {
+  this.gameTutorialContainer.classList.add("show");
+};
+
+HTMLActuator.prototype.closeButton = function () {
+  // IE only takes one value to remove at a time.
+  this.gameTutorialContainer.classList.remove("show");
 };

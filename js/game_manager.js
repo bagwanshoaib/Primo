@@ -9,6 +9,8 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
  //this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("tutorial", this.tutorial.bind(this));
+  this.inputManager.on("closeButton", this.closeButton.bind(this));
 
   this.setup();
 }
@@ -180,6 +182,14 @@ GameManager.prototype.actuate = function () {
     bestScore:  this.storageManager.getBestScore(),
     terminated: this.isGameTerminated()
   });
+};
+
+GameManager.prototype.tutorial = function() {
+ this.actuator.tutorial();
+};
+
+GameManager.prototype.closeButton = function() {
+ this.actuator.closeButton();
 };
 
 // Represent the current game as an object
