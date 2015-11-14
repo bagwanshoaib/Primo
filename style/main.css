@@ -639,8 +639,9 @@ hr {
     animation-fill-mode: both; }
 
     .game-container .game-message img {
-      width: 100px;
-      height: 100px;
+      height: 100px; 
+      width: 200px; 
+      overflow: hidden;
     }
   
    .game-container .game-tutorial.show{
