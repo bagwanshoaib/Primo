@@ -29,6 +29,8 @@ function LocalStorageManager() {
   this.currentLevelKey     = "currentLevel";
   this.currentMoveKey      = "currentMove";
   this.currentScoreKey     = "currentScore";
+  this.BestScoreAllKey     = "bestScoreAll";
+  
 
   var supported = this.localStorageSupported();
   this.storage = supported ? window.localStorage : window.fakeStorage;
@@ -45,6 +47,16 @@ LocalStorageManager.prototype.localStorageSupported = function () {
   } catch (error) {
     return false;
   }
+};
+
+
+// Best score getters/setters
+LocalStorageManager.prototype.getBestScoreAll = function () {
+  return this.storage.getItem(this.BestScoreAllKey) || 0;
+};
+
+LocalStorageManager.prototype.setBestScoreAll = function (score) {
+  this.storage.setItem(this.BestScoreAllKey, score);
 };
 
 // Best score getters/setters

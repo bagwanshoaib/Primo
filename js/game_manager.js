@@ -42,7 +42,7 @@ GameManager.prototype.keepPlaying = function () {
   this.bonus = this.storageManager.getCurrentScore();
   this.setup();
   this.storageManager.setBestScore(this.bonus);
-  this.actuator.updateBestScore(this.bonus);
+  this.actuator.updateBestScore(this.storageManager.getBestScoreAll());
   this.storageManager.setLevel(this.currentLevel); 
   this.actuator.updateGameLevel();
   this.actuator.updateScore(0);
@@ -88,8 +88,7 @@ GameManager.prototype.setup = function () {
   this.actuator.updateGameLevel();
   this.actuator.updateScore(0);
   this.actuator.updatetotalMoves(0);
-  this.actuator.updateBestScore(0);
-
+  this.actuator.updateBestScore(this.storageManager.getBestScoreAll());
 
   this.addTarget();
   
@@ -164,8 +163,8 @@ function isPrime(n) {
 
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function () {
-  if (this.storageManager.getBestScore() < this.score) {
-    this.storageManager.setBestScore(this.score);
+  if (this.storageManager.getBestScoreAll() < this.bonus) {
+    this.storageManager.setBestScoreAll(this.bonus);
   }
 
   // Clear the state when the game is over (game over only, not win)

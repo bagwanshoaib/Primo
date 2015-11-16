@@ -211,7 +211,7 @@ HTMLActuator.prototype.GameStatus = function() {
     this.chkPrimoSum = 0;
     this.message(false);
   }
-  else if (this.chkPrimoSum == this.storageManager.getGameTarget()) { //if (this.chkPrimoSum > 10) {
+  else if (this.chkPrimoSum == this.storageManager.getGameTarget()) { // if (this.chkPrimoSum > 10) {
     this.chkPrimoSum = 0;
     this.message(true);
   }
